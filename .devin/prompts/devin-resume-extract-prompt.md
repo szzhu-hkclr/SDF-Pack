@@ -7,6 +7,7 @@
 # Target:  Any robotics / software project repository
 # Output:  skill.md, skill-zh.md, knowledge.md, knowledge-zh.md
 # Schema:  .devin/wiki.json + .devin/taxonomy.yaml
+# Title:   project_title (specified by user or repo name) ""
 # ═══════════════════════════════════════════════════════════════
 
 ## ROLE
@@ -28,6 +29,11 @@ line range**.
 
 You MUST load and parse these three files before any analysis begins.
 All `taxonomy_ref` codes you emit MUST validate against `taxonomy.yaml`.
+
+project_title can be assigned by user, or fall back to use repo name if not specified.
+```yaml
+project_title: "<specified by user or repo name>"
+```
 
 ---
 
@@ -83,7 +89,7 @@ tech_stack:
       usage: "dependency | implemented | customized"
 
 skills:
-  - taxonomy_ref: "T?-L?"          # MUST exist in taxonomy.yaml
+  - taxonomy_ref: "T? <name> - L? <skill>"          # MUST exist in taxonomy.yaml
     skill_name: "<concise name>"
     proficiency_evidence:
       - file: "<relative path>"
@@ -95,7 +101,7 @@ skills:
       semantic:
         - "<recruiter synonym / variant>"
     cross_track_refs:
-      - "T?-L?"                    # if applicable
+      - "T? <name> - L? <skill>"                    # if applicable
 ```
 
 ### 1.2 Rules
@@ -118,7 +124,7 @@ Faithfully translate `skill.md` into Simplified Chinese following these conventi
 
 | Element              | Convention                                                  |
 | -------------------- | ----------------------------------------------------------- |
-| `taxonomy_ref`       | Keep English (`T1-L2`)                                      |
+| `taxonomy_ref`       | Keep English (`T? <name> - L? <skill>`)                                      |
 | ATS keywords         | First occurrence: `English Term / 中文释义`                  |
 | YAML field names     | Keep English                                                |
 | Prose / summaries    | Professional 简体中文                                        |
@@ -140,7 +146,7 @@ page_meta:
   language: en
   generated: "<ISO‑8601 timestamp>"
 
-project_title: "<repo name or project title>"
+project_title: "<specified by user or repo name>"
 summary: "<2‑sentence project summary>"
 
 architecture:
@@ -151,7 +157,7 @@ architecture:
       tradeoff: "<what was sacrificed>"
 
 bullets:
-  - id: "KB-001"
+  - id: "<project_title>-001"
     xyz_text: >
       <Action verb> <accomplished X> measured by <Y metric>
       by <doing Z technical method>.
@@ -164,7 +170,7 @@ bullets:
           source: "[measured] | [estimated]"
           derivation: "<how you got this number>"
     skills_referenced:
-      - "T?-L?"
+      - "T? <name> - L? <skill>"
     ats_keywords:
       - "<keyword>"
     interview_weight: <0.0–1.0>
@@ -256,46 +262,3 @@ Phase 0  ──►  Phase 1  ──►  Phase 2  ──►  Phase 3  ──►  
 ```
 
 Begin now. Start with Phase 0: full repository scan.
-
----
-
-## How to use this in practice
-
-The overall workflow looks like this:
-
-**Step 1 — Drop the config files into your repo:**
-
-```
-your-repo/
-└── .devin/
-    ├── pages                               # output directory
-    │   ├── .gitkeep
-    │   ├── knowledge.md
-    │   ├── knowledge-zh.md
-    │   ├── skill.md
-    │   └── skill-zh.md
-    ├── prompts
-    │   └── devin-resume-extract-prompt.md
-    ├── README.md
-    ├── scripts
-    │   └── validate-taxonomy-refs.py
-    ├── taxonomy-detail.md                  # prose descriptions for each T/L
-    ├── taxonomy.yaml                       # skill taxonomy
-    └── wiki.json                           # page schemas
-    ```
-
-**Step 2 — Invoke via Devin or DeepWiki Ask:**
-
-```
-@devin Read .devin/prompts/devin-resume-extract-prompt.md and execute all phases
-against this repository. Load .devin/taxonomy.yaml as the authoritative
-skill taxonomy. Output the four deliverable files into pages/.
-```
-
-**Step 3 — Post-generation validation:**
-
-```bash
-python .devin/scripts/validate-taxonomy-refs.py
-```
-
-The key design decisions in this prompt template are: the **phased execution pipeline** (scan → skill:en → skill:zh → knowledge:en → knowledge:zh) ensures each deliverable builds on the previous one's data; the **gated Phase 0** forces a complete codebase survey before any claims are made, preventing hallucinated skills; the **validation checklist** acts as a self-audit before output, catching mismatches between taxonomy codes and page content; and the **mirror constraint** on Chinese pages guarantees structural parity with the English source of truth while respecting the bilingual ATS keyword convention (`English / 中文释义`).

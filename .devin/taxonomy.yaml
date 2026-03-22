@@ -37,7 +37,7 @@ tracks:
 
   T2:
     name: Modeling & Control
-    type: foundation
+    type: Methodology
     scope: Kinematics, dynamics, classical & modern control
     levels:
       L0: Rigid-body intuition; open/closed-loop concepts
@@ -48,7 +48,7 @@ tracks:
 
   T3:
     name: Perception & State Estimation
-    type: foundation
+    type: Methodology
     scope: Vision, LiDAR, point clouds, SLAM, sensor fusion, deep perception
     levels:
       L0: Camera models; image processing; point cloud basics
@@ -59,7 +59,7 @@ tracks:
 
   T4:
     name: Planning & Decision Making
-    type: foundation
+    type: Methodology
     scope: Search, sampling-based planning, task planning, behavior architectures
     levels:
       L0: Graph search (BFS/DFS); C-space concepts
@@ -70,7 +70,7 @@ tracks:
 
   T5:
     name: Robot Learning
-    type: foundation
+    type: Methodology
     scope: ML/DL, RL, imitation learning, diffusion policies, VLAs, world models
     levels:
       L0: Supervised/unsupervised learning; DL basics (MLP/CNN/Transformer); PyTorch
