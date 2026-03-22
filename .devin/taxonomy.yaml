@@ -1,0 +1,142 @@
+# ─────────────────────────────────────────────────────────────
+# .devin/taxonomy.yaml
+# Concise robotics-skill taxonomy (schema layer)
+# Full prose & references  → taxonomy-detail.md
+# Rendered views           → pages/skill.md, pages/knowledge.md
+# ─────────────────────────────────────────────────────────────
+
+version: "1.0"
+schema_version: 1
+last_updated: "2026-03-21"
+
+# ── Global definitions ───────────────────────────────────────
+level_definitions:
+  L0: Fundamentals & Concepts
+  L1: Core Theory & Tools
+  L2: Intermediate Methods & Frameworks
+  L3: Advanced Techniques & Research
+  L4: Expert / Cutting-Edge
+
+track_types:
+  - foundation
+  - application
+
+# ── Tracks ───────────────────────────────────────────────────
+tracks:
+
+  T1:
+    name: Mathematical & Programming Foundations
+    type: foundation
+    scope: Math, programming languages, numerical methods, optimization
+    levels:
+      L0: Python/C++/TypeScript/JavaScript basics; Linux CLI; Git
+      L1: Linear algebra; calculus; probability & statistics; Homogeneous Transformation Matrix & Quaternions; ODEs
+      L2: Advanced C++/; numerical methods; convex optimization; scientific Python; React Hooks、Zustand; REST API
+      L3: Nonlinear optimization; Lie groups/algebras; concurrent C++; functional analysis; design pattern
+      L4: Differential geometry; ADMM/stochastic opt; formal methods; CUDA/GPU
+
+  T2:
+    name: Modeling & Control
+    type: foundation
+    scope: Kinematics, dynamics, classical & modern control
+    levels:
+      L0: Rigid-body intuition; open/closed-loop concepts
+      L1: FK/IK; Jacobian; PID; state-space representation
+      L2: Rigid-body dynamics; LQR; EKF/UKF; trajectory tracking
+      L3: MPC; impedance/admittance; contact dynamics; adaptive control
+      L4: Whole-body control; centroidal dynamics; contact-implicit opt; H-infinity/passivity
+
+  T3:
+    name: Perception & State Estimation
+    type: foundation
+    scope: Vision, LiDAR, point clouds, SLAM, sensor fusion, deep perception
+    levels:
+      L0: Camera models; image processing; point cloud basics
+      L1: Feature matching; stereo vision; IMU; calibration; ICP fundamentals
+      L2: Kalman filters; Visual/LiDAR SLAM; registration pipeline; multi-sensor fusion
+      L3: Factor graphs (GTSAM); detection/segmentation; 6DoF pose; GICP; VIO
+      L4: VLMs (CLIP/SAM2); 3D scene (NeRF/3DGS); scene graphs; tactile perception
+
+  T4:
+    name: Planning & Decision Making
+    type: foundation
+    scope: Search, sampling-based planning, task planning, behavior architectures
+    levels:
+      L0: Graph search (BFS/DFS); C-space concepts
+      L1: A*; Dijkstra; sampling fundamentals; task decomposition
+      L2: RRT/PRM variants; trajectory optimization; MoveIt2
+      L3: Behavior Trees; PDDL/HTN; LLM-based planning; motion primitives (DMP/ProMP)
+      L4: Multi-robot planning; TAMP; safety verification; online replanning
+
+  T5:
+    name: Robot Learning
+    type: foundation
+    scope: ML/DL, RL, imitation learning, diffusion policies, VLAs, world models
+    levels:
+      L0: Supervised/unsupervised learning; DL basics (MLP/CNN/Transformer); PyTorch
+      L1: RL fundamentals (MDP, PPO, SAC); reward design; Gymnasium
+      L2: Imitation learning (BC/DAgger/ACT); domain randomization; sim-to-real; teleoperation
+      L3: Diffusion Policy; Flow Matching; FAST tokenizer; teacher-student; offline RL
+      L4: VLA models & fine-tuning; world models; large-scale data; generalist policies
+
+  T6:
+    name: Manipulation
+    type: application
+    scope: Grasping, force control, dexterous & bimanual manipulation, deformable objects
+    levels:
+      L0: End-effector types; force/form closure basics
+      L1: Grasp planning; pick-and-place pipeline; collision avoidance
+      L2: Force/torque control; bin picking; tool use; flexible objects intro
+      L3: Dexterous manipulation; tactile closed-loop; contact-rich tasks; learned grasping
+      L4: Language-conditioned; generalist policy; bimanual; deformable objects
+
+  T7:
+    name: Locomotion & Navigation
+    type: application
+    scope: Mobile robots, legged locomotion, navigation, sim-to-real locomotion
+    levels:
+      L0: Mobile kinematics; map representations
+      L1: ZMP/gait generation; path planning (A*/D*); localization (AMCL)
+      L2: Centroidal momentum; RL locomotion; Nav2; parallel sim (Isaac Gym/Lab/Genesis)
+      L3: Dynamic locomotion; terrain adaptation; sim-to-real; whole-body; motion tracking
+      L4: Loco-manipulation; parkour; multi-modal locomotion; multi-robot navigation
+
+  T8:
+    name: Systems Engineering & Infrastructure
+    type: foundation
+    scope: Linux, ROS2, simulation platforms, real-time systems, safety, deployment
+    levels:
+      L0: Linux admin; Docker; networking (TCP/UDP); WebSocket
+      L1: ROS2 fundamentals; URDF/Xacro; simulation basics; serial comms; Web-based HMI
+      L2: Advanced ROS2 (lifecycle/DDS); MuJoCo/Genesis; PREEMPT_RT; EtherCAT; CAN; structured logging; system monitoring; offline-first architecture
+      L3: Architecture patterns; Isaac Lab/Sim; safety standards (ISO); RTOS; ManiSkill
+      L4: Full system design; production deploy; AI infra/MLOps; certification; hard RT
+
+# ── Cross-references (inter-track links) ─────────────────────
+cross_references:
+  - from: T2-L2    # EKF/UKF for state estimation
+    to:   T3-L2    # Kalman filter family
+    note: State estimation shared across control and perception
+
+  - from: T5-L2    # sim-to-real fundamentals
+    to:   T7-L2    # parallel sim training (Isaac Gym/Lab/Genesis)
+    note: Sim-to-real pipeline shared across learning and locomotion
+
+  - from: T5-L4    # VLA models
+    to:   T6-L4    # language-conditioned manipulation
+    note: VLA outputs drive manipulation policies
+
+  - from: T2-L4    # whole-body control
+    to:   T7-L3    # whole-body locomotion control
+    note: WBC theory applied in locomotion
+
+# ── Validation constraints ───────────────────────────────────
+validation:
+  required_fields:
+    track: [name, type, scope, levels]
+    levels: [L0, L1, L2, L3, L4]
+  track_count: 8
+  level_count_per_track: 5
+  valid_types: [foundation, application]
+  naming_pattern: "T[1-8]"
+  level_pattern: "L[0-4]"
