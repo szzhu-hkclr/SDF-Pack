@@ -1,11 +1,11 @@
 {
   "repo_notes": [
     {
-      "content": "This wiki must produce EXACTLY four deliverables — dual-language (English + Chinese) versions of two pages: (1) skill.md / skill_zh.md — maps all technologies, frameworks, libraries, and tools to a robotics skill taxonomy with file-level evidence, and (2) knowledge.md / knowledge_zh.md — contains XYZ-format resume bullet points (with STAR-format backing data for interview prep) with quantified metrics extracted from the codebase. English pages are the primary source of truth; Chinese pages (中文页面) must be faithful translations that preserve all taxonomy_ref codes, ATS keywords in their original English form (with Chinese annotations where helpful), YAML structure, and quantified metrics. Both language versions MUST follow the YAML schemas defined in their respective page_notes. Focus on: what was built, what technologies were used, what problems were solved, and what measurable outcomes were achieved.",
+      "content": "This wiki must produce EXACTLY four deliverables — dual-language (English + Chinese) versions of two pages: (1) skill.md / skill-zh.md — maps all technologies, frameworks, libraries, and tools to a robotics skill taxonomy with file-level evidence, and (2) knowledge.md / knowledge-zh.md — contains XYZ-format resume bullet points (with STAR-format backing data for interview prep) with quantified metrics extracted from the codebase. English pages are the primary source of truth; Chinese pages (中文页面) must be faithful translations that preserve all taxonomy_ref codes, ATS keywords in their original English form (with Chinese annotations where helpful), YAML structure, and quantified metrics. Both language versions MUST follow the YAML schemas defined in their respective page_notes. Focus on: what was built, what technologies were used, what problems were solved, and what measurable outcomes were achieved.",
       "author": "Resume SOP"
     },
     {
-      "content": "Skill Taxonomy is defined in .devin/taxonomy.yaml — Tracks: T1–T8, Levels: L0–L4. All taxonomy_ref codes in skill.md/skill_zh.md and knowledge.md/knowledge_zh.md MUST validate against this file. Detailed descriptions are in .devin/taxonomy-detail.md.",
+      "content": "Skill Taxonomy is defined in .devin/taxonomy.yaml — Tracks: T1–T8, Levels: L0–L4. All taxonomy_ref codes in skill.md/skill-zh.md and knowledge.md/knowledge-zh.md MUST validate against this file. Detailed descriptions are in .devin/taxonomy-detail.md.",
       "author": "Resume SOP"
     },
     {
