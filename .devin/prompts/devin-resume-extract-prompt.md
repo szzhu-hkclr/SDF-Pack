@@ -7,7 +7,7 @@
 # Target:  Any robotics / software project repository
 # Output:  skill.md, skill-zh.md, knowledge.md, knowledge-zh.md
 # Schema:  .devin/wiki.json + .devin/taxonomy.yaml
-# Title:   project_title (specified by user or repo name) ""
+# Title:   repo_title (specified by user or repo name) ""
 # ═══════════════════════════════════════════════════════════════
 
 ## ROLE
@@ -30,9 +30,9 @@ line range**.
 You MUST load and parse these three files before any analysis begins.
 All `taxonomy_ref` codes you emit MUST validate against `taxonomy.yaml`.
 
-project_title can be assigned by user, or fall back to use repo name if not specified.
+repo_title can be assigned by user, or fall back to use repo name if not specified.
 ```yaml
-project_title: "<specified by user or repo name>"
+repo_title: "<specified here or use repo name>"
 ```
 
 ---
@@ -88,8 +88,9 @@ tech_stack:
     - name: "<library>"
       usage: "dependency | implemented | customized"
 
-skills:
-  - taxonomy_ref: "T? <name> - L? <skill>"          # MUST exist in taxonomy.yaml
+skills:                                                         # T1-T8, L0-L4, when a scope or skill_name not 
+  - taxonomy_ref: "T<track_num>-L<level_num>-<skill_name>"      # included, add to proper track and/or levels
+                                                                # and warn in the very begining of all the wiki generation    
     skill_name: "<concise name>"
     proficiency_evidence:
       - file: "<relative path>"
@@ -101,14 +102,14 @@ skills:
       semantic:
         - "<recruiter synonym / variant>"
     cross_track_refs:
-      - "T? <name> - L? <skill>"                    # if applicable
+      - "T<track_num>-L<level_num>-<skill_name>"                    # if applicable
 ```
 
 ### 1.2 Rules
-
+# T1-T8, L0-L4, when a scope or skill_name not included, add to proper track and/or levels, and warn in the very begining of all the wiki generation
 | #  | Rule                                                                              |
 | -- | --------------------------------------------------------------------------------- |
-| R1 | Every `taxonomy_ref` MUST exist in `.devin/taxonomy.yaml`.                        |
+| R1 | Every `taxonomy_ref`  exist in `.devin/taxonomy.yaml`.                        |
 | R2 | Every skill MUST cite ≥1 source file + line range. No exceptions.                 |
 | R3 | Do NOT list a technology that only appears in a manifest without source usage.     |
 | R4 | Distinguish `dependency` vs `implemented` vs `customized` in `tech_stack`.        |
@@ -124,7 +125,7 @@ Faithfully translate `skill.md` into Simplified Chinese following these conventi
 
 | Element              | Convention                                                  |
 | -------------------- | ----------------------------------------------------------- |
-| `taxonomy_ref`       | Keep English (`T? <name> - L? <skill>`)                                      |
+| `taxonomy_ref`       | Keep English (`T<track_num>-L<level_num>-<skill_name>`)                                      |
 | ATS keywords         | First occurrence: `English Term / 中文释义`                  |
 | YAML field names     | Keep English                                                |
 | Prose / summaries    | Professional 简体中文                                        |
@@ -146,7 +147,7 @@ page_meta:
   language: en
   generated: "<ISO‑8601 timestamp>"
 
-project_title: "<specified by user or repo name>"
+repo_title: "<specified by user or repo name>"
 summary: "<2‑sentence project summary>"
 
 architecture:
@@ -157,7 +158,7 @@ architecture:
       tradeoff: "<what was sacrificed>"
 
 bullets:
-  - id: "<project_title>-001"
+  - id: "<repo_title>-001"
     xyz_text: >
       <Action verb> <accomplished X> measured by <Y metric>
       by <doing Z technical method>.
@@ -170,7 +171,7 @@ bullets:
           source: "[measured] | [estimated]"
           derivation: "<how you got this number>"
     skills_referenced:
-      - "T? <name> - L? <skill>"
+      - "T<track_num>-L<level_num>-<skill_name>"
     ats_keywords:
       - "<keyword>"
     interview_weight: <0.0–1.0>
@@ -210,7 +211,7 @@ Translate `knowledge.md` following the same language policy as Phase 2, plus:
 | `action_verb`     | Strong Chinese verb: 设计并实现, 架构设计, 优化, 集成, 降低, 提升, 构建, 部署 |
 | `star_format`     | Full Chinese: 情境 / 任务 / 行动 / 结果                           |
 | `ats_keywords`    | `English Term / 中文释义`                                         |
-| `project_title`   | Bilingual: `"英文标题 / 中文标题"`                                 |
+| `repo_title`   | Bilingual: `"英文标题 / 中文标题"`                                 |
 | Metrics & numbers | Identical to English                                             |
 | YAML field names  | Keep English                                                     |
 
