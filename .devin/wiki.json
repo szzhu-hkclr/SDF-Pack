@@ -1,56 +1,47 @@
 {
   "repo_notes": [
     {
-      "content": "This wiki must produce EXACTLY four deliverables — dual-language (English + Chinese) versions of two pages: (1) skill.md / skill-zh.md — maps all technologies, frameworks, libraries, and tools to a robotics skill taxonomy with file-level evidence, and (2) knowledge.md / knowledge-zh.md — contains XYZ-format resume bullet points (with STAR-format backing data for interview prep) with quantified metrics extracted from the codebase. English pages are the primary source of truth; Chinese pages (中文页面) must be faithful translations that preserve all taxonomy_ref codes, ATS keywords in their original English form (with Chinese annotations where helpful), YAML structure, and quantified metrics. Both language versions MUST follow the YAML schemas defined in their respective page_notes. Focus on: what was built, what technologies were used, what problems were solved, and what measurable outcomes were achieved.",
-      "author": "Resume SOP"
+      "content": "SCOPE: Generate EXACTLY two English-only pages: 'Skill Mapping' and 'Knowledge Base'. Zero Chinese text. Both pages serve as human-readable documentation AND as input for an automated extraction pipeline downstream.",
+      "author": "szzhu"
     },
     {
-      "content": "Skill Taxonomy is defined in .devin/taxonomy.yaml — Tracks: T1–T8, Levels: L0–L4. All taxonomy_ref codes in skill.md/skill-zh.md and knowledge.md/knowledge-zh.md MUST validate against this file. Detailed descriptions are in .devin/taxonomy-detail.md.",
-      "author": "Resume SOP"
+      "content": "TAXONOMY FILE: The file .devin/taxonomy.yaml in this repo defines 8 tracks (T1-T8), each with 5 levels (L0-L4). Each level contains a 'skills' map of snake_case skill keys, each with an 'aliases' array. When mapping technologies to skills, use ONLY (taxonomy_ref, skill_name) pairs that exist in this file. Format: taxonomy_ref = 'T{1-8}-L{0-4}', skill_name = a key under that level's skills map. If a technology has no match, list it separately as an unmapped skill with a suggested track.",
+      "author": "szzhu"
     },
     {
-      "content": "LANGUAGE POLICY: English pages must use professional, ATS-optimized technical English. Chinese pages (中文页面) must use professional Simplified Chinese (简体中文) with the following conventions: (a) taxonomy_ref codes (e.g., T1-L2) remain in English, (b) ATS keywords appear as 'English Term / 中文释义' on first occurrence, (c) action verbs in xyz_text use strong Chinese equivalents (e.g., Engineered→设计并实现, Reduced→降低, Architected→架构设计), (d) metrics and numbers use the same format as English, (e) YAML field names remain in English for schema compatibility.",
-      "author": "Resume SOP"
+      "content": "STRUCTURED DATA PREFERENCE: Each page should contain ONE primary fenced YAML code block (```yaml ... ```) as its structured payload. All supplementary discussion should be OUTSIDE the code block as prose. If producing valid YAML is difficult, use a markdown table with columns [taxonomy_ref, skill_name, evidence_file, evidence_lines, summary] as an alternative. The downstream pipeline can parse either format.",
+      "author": "szzhu"
+    },
+    {
+      "content": "EVIDENCE RULES: Every skill claim must cite at least one source file path and approximate line range. Format: {file: 'path/to/file', lines: '42-87', summary: '...'}. Distinguish between 'declared dependency' (package.json/CMakeLists.txt only) and 'implemented/customized' (actual usage in source). Only implemented usage counts as proficiency evidence. If line numbers are uncertain, prefix with '~'. If path is inferred, append '[inferred]'.",
+      "author": "szzhu"
+    },
+    {
+      "content": "ATS KEYWORD SOURCING: The 'aliases' arrays in .devin/taxonomy.yaml are the PRIMARY source for exact ATS keywords. In the Skill Mapping output, separate keywords into: 'exact' (drawn from taxonomy aliases) and 'semantic' (additional terms observed in code — class names, variable names, API calls — that are NOT already in the aliases array). Do NOT duplicate taxonomy aliases into semantic.",
+      "author": "szzhu"
     }
   ],
   "pages": [
     {
-      "title": "Skill Mapping — English",
-      "purpose": "Extract and map ALL technologies, frameworks, libraries, tools, algorithms, and design patterns used in this codebase to the robotics skill taxonomy defined in .devin/taxonomy.yaml (T1-T8, L0-L4). For each skill: provide the taxonomy reference code, the specific file paths and line ranges as evidence, list exact ATS keywords and semantic variants, and note cross-track dependencies. Output the result in structured YAML format with sections: tech_stack (languages with versions and LOC%, frameworks with components, tools, libraries) and skills (array of taxonomy_ref, skill_name, proficiency_evidence with file/lines/summary, ats_keywords with exact and semantic sub-fields, cross_track_refs). This page MUST be written entirely in English.",
+      "title": "Skill Mapping",
+      "purpose": "Identify ALL technologies, frameworks, libraries, algorithms, and design patterns in this codebase. Map each to the robotics skill taxonomy in .devin/taxonomy.yaml using (taxonomy_ref, skill_name) pairs. For each skill, provide file-level evidence and ATS keywords. Also document the tech stack (languages with approximate LOC%, frameworks, tools). List any technologies not covered by the taxonomy as unmapped skills.",
       "parent": null,
       "page_notes": [
         {
-          "content": "CRITICAL: Every skill claim MUST cite specific source files and line numbers. Do NOT list technologies that appear only in package.json/requirements.txt without actual usage in source code. Distinguish between 'used as dependency' vs 'implemented/customized'. For ATS keywords, always include both the exact technical term AND common synonyms a recruiter might search for. All taxonomy_ref values MUST exist in .devin/taxonomy.yaml."
+          "content": "PREFERRED YAML STRUCTURE: {schema_version: 1, source_repo: '<repo>', skills: [{taxonomy_ref, skill_name, proficiency_evidence: [{file, lines, summary}], ats_keywords: {exact: [...], semantic: [...]}}], tech_stack: {languages: [{name, version, loc_pct}], frameworks: [...], tools: [...]}, unmapped_skills: [{name, observed_in, suggested_track}]}. After the YAML block, add prose sections: '## Architecture Context' and '## Implementation Patterns'."
         }
       ]
     },
     {
-      "title": "技能映射 (Skill Mapping) — 中文",
-      "purpose": "本页是 'Skill Mapping — English' 的中文对照版本。将本代码库中使用的所有技术、框架、库、工具、算法和设计模式提取并映射到 .devin/taxonomy.yaml 中定义的机器人技能分类体系 (T1-T8, L0-L4)。对每项技能提供：分类参考代码 (taxonomy_ref，保持英文如 T1-L2)、具体源文件路径和行号作为证据、ATS 关键词（首次出现时标注 '英文术语 / 中文释义' 格式）、跨赛道依赖关系。输出格式为结构化 YAML，包含 tech_stack（语言及版本和代码占比、框架及组件、工具、库）和 skills（taxonomy_ref、skill_name 中英文、proficiency_evidence 含 file/lines/summary、ats_keywords 含 exact 和 semantic 子字段、cross_track_refs）。全文使用简体中文撰写，YAML 字段名保持英文。",
+      "title": "Knowledge Base",
+      "purpose": "Generate 5-8 resume bullet points derived from this codebase. Each bullet must start with a strong action verb, include one quantified metric (real or estimated from code), and reference at least one (taxonomy_ref, skill_name) pair from the Skill Mapping page. Also provide a project summary, architectural decisions, and interview talking points.",
       "parent": null,
       "page_notes": [
         {
-          "content": "关键要求：每项技能声明必须引用具体源文件和行号。不要列出仅出现在 package.json/requirements.txt 中但未在源代码中实际使用的技术。区分「作为依赖使用」和「自行实现/定制」。ATS 关键词需同时包含英文原始技术术语及中文常用译名。所有 taxonomy_ref 值必须存在于 .devin/taxonomy.yaml 中。"
-        }
-      ]
-    },
-    {
-      "title": "Knowledge Base — English",
-      "purpose": "Generate 5-8 resume bullet points. Each bullet has TWO representations: (a) xyz_text — the final 1-line resume bullet in XYZ format ('Accomplished [X] measured by [Y] by doing [Z]'), and (b) star_format — the expanded Situation/Task/Action/Result backing data for interview preparation. Each bullet must: start with a strong action verb; include at least one quantified metric; reference specific skills from the Skill Mapping page; include ATS keywords. Also provide: a 2-sentence project summary, architecture overview with key design decisions and tradeoffs, and source file references for each bullet. Output in structured YAML format with sections: project_title, summary, architecture (pattern, key_decisions with decision/rationale/tradeoff), and bullets (array of id, xyz_text, action_verb, metrics with quantified/values sub-fields, skills_referenced, ats_keywords, interview_weight 0.0-1.0, star_format with situation/task/action/result, source_files). This page MUST be written entirely in English.",
-      "parent": null,
-      "page_notes": [
+          "content": "PREFERRED YAML STRUCTURE: {schema_version: 1, project_title: '<string>', project_summary: '<2 sentences>', bullets: [{id: 'B01'..'B08', text: '<≤120 chars, action verb, one metric>', star: {situation, task, action, result}, skills_referenced: [{taxonomy_ref, skill_name}], ats_keywords: [...], interview_weight: <0.0-1.0>}]}. After the YAML block, add: '## Project Narrative' and '## Talking Points'."
+        },
         {
-          "content": "CRITICAL: xyz_text is the FINAL resume line — must be ≤2 lines, action-verb-first, metric-included, ATS-scannable. star_format is the BACKING DATA — verbose is fine, used for interview prep. Metrics must be REAL and derivable from the code. If exact metrics are not available, provide reasonable estimates clearly marked as [estimated]. interview_weight should be higher for bullets with stronger metrics, more complex technical depth, and higher relevance to common robotics interview topics."
-        }
-      ]
-    },
-    {
-      "title": "知识库 (Knowledge Base) — 中文",
-      "purpose": "本页是 'Knowledge Base — English' 的中文对照版本。生成 5-8 条简历要点，每条包含两种表述：(a) xyz_text — XYZ 格式的最终简历单行描述（'通过[Z]实现了[X]，以[Y]衡量'），以及 (b) star_format — 用于面试准备的 STAR 格式展开数据（情境/任务/行动/结果）。每条要点必须：以有力的动作动词开头；包含至少一个量化指标；引用技能映射页的具体技能；包含 ATS 关键词（英文原词附中文注释）。同时提供：2 句话项目摘要、架构概览（含关键设计决策和权衡）、每条要点的源文件引用。输出格式为结构化 YAML，包含 project_title（中英文）、summary、architecture（pattern、key_decisions 含 decision/rationale/tradeoff）、bullets（id、xyz_text 中文版、action_verb 中文、metrics 含 quantified/values、skills_referenced、ats_keywords、interview_weight 0.0-1.0、star_format 含中文 situation/task/action/result、source_files）。全文使用简体中文，YAML 字段名保持英文。",
-      "parent": null,
-      "page_notes": [
-        {
-          "content": "关键要求：xyz_text 是最终简历用语，必须≤2行、动词开头、包含指标、适合 ATS 扫描（中文简历场景）。star_format 是面试准备的详细数据，可详尽描述。指标必须真实且可从代码推导，若无法获取精确指标，需提供合理估算并明确标记为 [估算值]。interview_weight 应根据指标强度、技术深度和与常见机器人面试题目的相关性进行加权。动作动词示例：设计并实现、架构设计、优化、集成、降低、提升、构建、部署。"
+          "content": "BULLET QUALITY: (1) text must be the final resume line — ATS-scannable, action-verb-first, exactly one quantified metric. (2) Metrics must be derivable from code (throughput, latency, LOC, test coverage). Mark estimates with '[est.]'. (3) interview_weight 0.7-1.0 for strong metrics + deep complexity. (4) IDs sequential: B01-B08."
         }
       ]
     }

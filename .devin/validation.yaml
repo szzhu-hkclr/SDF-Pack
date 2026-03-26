@@ -1,0 +1,45 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# .devin/validation.yaml
+# Schema enforcement — consumed by Stage 2 (Extractor) only
+# ─────────────────────────────────────────────────────────────────────────────
+version: "1.1"
+schema_version: 2
+last_updated: "2026-03-25"
+
+validation:
+  required_fields:
+    track: [name, type, scope, levels]
+    level: [description, skills, prerequisites]
+    skill: [aliases]
+    levels: [L0, L1, L2, L3, L4]
+
+  track_count: 8
+  level_count_per_track: 5
+  valid_types: [foundation, methodology, application]
+
+  naming_pattern: "T[1-8]"
+  level_pattern:  "L[0-4]"
+
+  alias_constraints:
+    min_aliases_per_skill: 2
+    max_aliases_per_skill: 10
+    globally_unique: false
+    collision_resolution: longest_then_highest
+
+  taxonomy_ref_format: "T[1-8]-L[0-4]"
+  skill_key_format: "^[a-z][a-z0-9_]*$"    # snake_case only; stable join key
+
+  source_hash:
+    algorithm: sha256
+    target_files: [".devin/taxonomy.yaml", ".devin/wiki.json"]
+    embed_in: ["data/skill/*.md", "data/knowledge/*.md"]
+
+  prerequisite_constraints:
+    valid_refs: true          # all T-L refs must resolve in taxonomy.yaml
+    no_circular: true         # detect circular prerequisite chains
+    cross_track_allowed: true
+
+  cross_reference_constraints:
+    valid_from_refs: true
+    valid_to_refs: true
+    symmetric_not_required: true   # one-directional links are valid

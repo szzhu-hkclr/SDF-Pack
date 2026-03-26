@@ -1,0 +1,1514 @@
+# ═════════════════════════════════════════════════════════════════════════════
+# FILE: .devin/acronyms.yaml
+# VERSION: 1.1 / schema_version: 2
+# LAST UPDATED: 2026-03-25
+#
+# Consumed by: match_policy.yaml → alias_match_policy.tiers[mode=acronym_expansion]
+# Direction:   bidirectional — loader builds BOTH:
+#                acronym  → full_form  (JD uses bare acronym "MPC")
+#                full_form → acronym   (taxonomy alias uses spelled-out form)
+#
+# ambiguous: false  → single dominant meaning in this robotics domain
+#                     scored at confidence_unambiguous (0.95)
+# ambiguous: true   → multiple valid robotics interpretations exist
+#                     scored at confidence_ambiguous  (0.80)
+#                     relies on match_policy.yaml disambiguation_rules
+#
+# preferred_tracks: non-binding soft hint; disambiguation_rules take precedence
+# aliases:          additional full-form spelling variants (e.g. hyphenation)
+# notes:            human-reviewer clarification for ambiguous entries
+# ═════════════════════════════════════════════════════════════════════════════
+
+version: "1.1"
+schema_version: 2
+last_updated: "2026-03-25"
+
+acronyms:
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # T1 · Mathematical Foundations & Optimization
+  # ─────────────────────────────────────────────────────────────────────────
+
+  SVD:
+    full_form: "singular value decomposition"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  PCA:
+    full_form: "principal component analysis"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  ICA:
+    full_form: "independent component analysis"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  FFT:
+    full_form: "fast fourier transform"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  IFFT:
+    full_form: "inverse fast fourier transform"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  ODE:
+    full_form: "ordinary differential equation"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  PDE:
+    full_form: "partial differential equation"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  QP:
+    full_form: "quadratic programming"
+    ambiguous: true
+    preferred_tracks: [T1, T7]
+    notes: "Also used in T7 (whole-body control) and T4 (trajectory optimization). Context distinguishes."
+
+  SDP:
+    full_form: "semidefinite programming"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  SOCP:
+    full_form: "second-order cone programming"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  LP:
+    full_form: "linear programming"
+    ambiguous: true
+    preferred_tracks: [T1]
+    notes: "Heavily ambiguous outside math context; confidence capped at ambiguous."
+
+  NLP:
+    full_form: "nonlinear programming"
+    ambiguous: true
+    preferred_tracks: [T1, T7]
+    notes: "Conflicts with 'natural language processing' (T5). disambiguation_rules must use context."
+
+  SQP:
+    full_form: "sequential quadratic programming"
+    ambiguous: false
+    preferred_tracks: [T1, T7]
+
+  BFGS:
+    full_form: "broyden fletcher goldfarb shanno"
+    aliases:
+      - "broyden-fletcher-goldfarb-shanno"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  LBFGS:
+    full_form: "limited memory broyden fletcher goldfarb shanno"
+    aliases:
+      - "l-bfgs"
+      - "l bfgs"
+      - "limited-memory bfgs"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  SGD:
+    full_form: "stochastic gradient descent"
+    ambiguous: false
+    preferred_tracks: [T1, T5]
+
+  SE3:
+    full_form: "special euclidean group"
+    aliases:
+      - "se(3)"
+      - "special euclidean group 3d"
+    ambiguous: false
+    preferred_tracks: [T1, T6, T7]
+
+  SO3:
+    full_form: "special orthogonal group"
+    aliases:
+      - "so(3)"
+      - "special orthogonal group 3d"
+    ambiguous: false
+    preferred_tracks: [T1, T6, T7]
+
+  SE2:
+    full_form: "special euclidean group 2d"
+    aliases:
+      - "se(2)"
+    ambiguous: false
+    preferred_tracks: [T1, T7]
+
+  RMSE:
+    full_form: "root mean square error"
+    aliases:
+      - "root-mean-square error"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  MSE:
+    full_form: "mean square error"
+    aliases:
+      - "mean squared error"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  MAE:
+    full_form: "mean absolute error"
+    ambiguous: false
+    preferred_tracks: [T1]
+
+  MLE:
+    full_form: "maximum likelihood estimation"
+    ambiguous: false
+    preferred_tracks: [T1, T3]
+
+  MAP:
+    full_form: "maximum a posteriori"
+    ambiguous: true
+    preferred_tracks: [T1, T3]
+    notes: "Heavily ambiguous: also 'map' (navigation map). Only match in estimation/inference context."
+
+  MCMC:
+    full_form: "markov chain monte carlo"
+    ambiguous: false
+    preferred_tracks: [T1, T5]
+
+  GMM:
+    full_form: "gaussian mixture model"
+    ambiguous: false
+    preferred_tracks: [T1, T3, T5]
+
+  GP:
+    full_form: "gaussian process"
+    ambiguous: true
+    preferred_tracks: [T1, T5]
+    notes: "Ambiguous: also 'general purpose'. Use context (regression, prior, kernel) to disambiguate."
+
+  GPR:
+    full_form: "gaussian process regression"
+    ambiguous: true
+    preferred_tracks: [T1, T5]
+    notes: "Ambiguous: also 'ground penetrating radar'. Robotics context strongly prefers regression."
+
+  EM:
+    full_form: "expectation maximization"
+    ambiguous: true
+    preferred_tracks: [T1, T3]
+    notes: "Also 'electromagnetic' in hardware context."
+
+  DOF:
+    full_form: "degrees of freedom"
+    ambiguous: false
+    preferred_tracks: [T1, T6, T7]
+
+  KL:
+    full_form: "kullback leibler divergence"
+    aliases:
+      - "kullback-leibler divergence"
+      - "kl divergence"
+    ambiguous: false
+    preferred_tracks: [T1, T5]
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # T2 · Control Theory & Dynamics
+  # ─────────────────────────────────────────────────────────────────────────
+
+  PID:
+    full_form: "proportional integral derivative"
+    aliases:
+      - "proportional-integral-derivative"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  PD:
+    full_form: "proportional derivative"
+    aliases:
+      - "proportional-derivative"
+    ambiguous: true
+    preferred_tracks: [T2]
+    notes: "Ambiguous outside engineering context. Boost only when adjacent to 'control' or 'gain'."
+
+  PI:
+    full_form: "proportional integral"
+    aliases:
+      - "proportional-integral"
+    ambiguous: true
+    preferred_tracks: [T2]
+    notes: "Very ambiguous (π, private investigator, etc.). Only match in explicit control context."
+
+  MPC:
+    full_form: "model predictive control"
+    ambiguous: false
+    preferred_tracks: [T2, T7]
+
+  NMPC:
+    full_form: "nonlinear model predictive control"
+    aliases:
+      - "nonlinear mpc"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  LQR:
+    full_form: "linear quadratic regulator"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  LQG:
+    full_form: "linear quadratic gaussian"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  ILQR:
+    full_form: "iterative linear quadratic regulator"
+    aliases:
+      - "ilqr"
+      - "iterative lqr"
+    ambiguous: false
+    preferred_tracks: [T2, T4]
+
+  ILQG:
+    full_form: "iterative linear quadratic gaussian"
+    aliases:
+      - "ilqg"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  LMPC:
+    full_form: "learning model predictive control"
+    ambiguous: true
+    preferred_tracks: [T2, T5]
+    notes: "Also abbreviates 'linear MPC' in some literature. Prefer full form in context."
+
+  HINF:
+    full_form: "h infinity control"
+    aliases:
+      - "h-infinity"
+      - "h∞"
+      - "h-inf"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  EKF:
+    full_form: "extended kalman filter"
+    ambiguous: true
+    preferred_tracks: [T2, T3]
+    notes: "Disambiguation rule in match_policy.yaml routes to T2 (control/observer) vs T3 (SLAM/perception) by context."
+
+  UKF:
+    full_form: "unscented kalman filter"
+    ambiguous: true
+    preferred_tracks: [T2, T3]
+    notes: "Same context disambiguation as EKF."
+
+  KF:
+    full_form: "kalman filter"
+    ambiguous: true
+    preferred_tracks: [T2, T3]
+    notes: "Broad context disambiguation needed (control observer vs. estimation/SLAM)."
+
+  PF:
+    full_form: "particle filter"
+    ambiguous: true
+    preferred_tracks: [T3]
+    notes: "Also 'power factor'. Robotics context strongly prefers particle filter."
+
+  ADRC:
+    full_form: "active disturbance rejection control"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  ESO:
+    full_form: "extended state observer"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  SMC:
+    full_form: "sliding mode control"
+    ambiguous: true
+    preferred_tracks: [T2]
+    notes: "Also 'surface mount component'. Use 'control' or 'dynamics' context to disambiguate."
+
+  FSM:
+    full_form: "finite state machine"
+    ambiguous: false
+    preferred_tracks: [T2, T8]
+
+  RLS:
+    full_form: "recursive least squares"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  DP:
+    full_form: "dynamic programming"
+    ambiguous: true
+    preferred_tracks: [T2, T4, T5]
+    notes: "Also 'diffusion policy' (T5, robot learning). Context (Bellman, value function vs. policy network) disambiguates."
+
+  MPPI:
+    full_form: "model predictive path integral"
+    ambiguous: false
+    preferred_tracks: [T2, T4]
+
+  CEM:
+    full_form: "cross entropy method"
+    aliases:
+      - "cross-entropy method"
+    ambiguous: false
+    preferred_tracks: [T2, T4, T5]
+
+  ZOH:
+    full_form: "zero order hold"
+    aliases:
+      - "zero-order hold"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  ARE:
+    full_form: "algebraic riccati equation"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  DARE:
+    full_form: "discrete algebraic riccati equation"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  CLF:
+    full_form: "control lyapunov function"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  CBF:
+    full_form: "control barrier function"
+    ambiguous: false
+    preferred_tracks: [T2]
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # T3 · Perception, Sensor Fusion & SLAM
+  # ─────────────────────────────────────────────────────────────────────────
+
+  SLAM:
+    full_form: "simultaneous localization and mapping"
+    aliases:
+      - "simultaneous localisation and mapping"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  LIDAR:
+    full_form: "light detection and ranging"
+    aliases:
+      - "lidar"
+      - "li-dar"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  IMU:
+    full_form: "inertial measurement unit"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  GPS:
+    full_form: "global positioning system"
+    ambiguous: false
+    preferred_tracks: [T3, T7]
+
+  GNSS:
+    full_form: "global navigation satellite system"
+    ambiguous: false
+    preferred_tracks: [T3, T7]
+
+  INS:
+    full_form: "inertial navigation system"
+    ambiguous: false
+    preferred_tracks: [T3, T7]
+
+  RGBD:
+    full_form: "rgb depth"
+    aliases:
+      - "rgb-d"
+      - "rgbd"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  TOF:
+    full_form: "time of flight"
+    aliases:
+      - "time-of-flight"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  VO:
+    full_form: "visual odometry"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  VIO:
+    full_form: "visual inertial odometry"
+    aliases:
+      - "visual-inertial odometry"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  MSCKF:
+    full_form: "multi state constraint kalman filter"
+    aliases:
+      - "multi-state constraint kalman filter"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  LOAM:
+    full_form: "lidar odometry and mapping"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  LIO:
+    full_form: "lidar inertial odometry"
+    aliases:
+      - "lidar-inertial odometry"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  LIOSAM:
+    full_form: "lidar inertial odometry smoothing and mapping"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  VINS:
+    full_form: "visual inertial navigation system"
+    aliases:
+      - "visual-inertial navigation system"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  BA:
+    full_form: "bundle adjustment"
+    ambiguous: true
+    preferred_tracks: [T3]
+    notes: "Ambiguous outside computer vision. Strong T3 signal if 'reprojection' or 'pose graph' nearby."
+
+  PNP:
+    full_form: "perspective n point"
+    aliases:
+      - "pnp"
+      - "perspective-n-point"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  RANSAC:
+    full_form: "random sample consensus"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  ICP:
+    full_form: "iterative closest point"
+    ambiguous: true
+    preferred_tracks: [T3]
+    notes: "Ambiguous: also 'inductively coupled plasma' (chemistry). Robotics context strongly prefers point cloud registration."
+
+  GICP:
+    full_form: "generalized iterative closest point"
+    aliases:
+      - "generalized icp"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  NDT:
+    full_form: "normal distributions transform"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  TEASER:
+    full_form: "truncated least squares estimation and semidefinite relaxation"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  FPFH:
+    full_form: "fast point feature histograms"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  SHOT:
+    full_form: "signature of histograms of orientations"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  SFM:
+    full_form: "structure from motion"
+    aliases:
+      - "structure-from-motion"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  MVS:
+    full_form: "multi view stereo"
+    aliases:
+      - "multi-view stereo"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  KLT:
+    full_form: "kanade lucas tomasi"
+    aliases:
+      - "kanade-lucas-tomasi tracker"
+      - "klt tracker"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  ESDF:
+    full_form: "euclidean signed distance field"
+    aliases:
+      - "euclidean signed distance function"
+    ambiguous: false
+    preferred_tracks: [T3, T4]
+
+  TSDF:
+    full_form: "truncated signed distance function"
+    aliases:
+      - "truncated signed distance field"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  BEV:
+    full_form: "bird's eye view"
+    aliases:
+      - "birds eye view"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  ROI:
+    full_form: "region of interest"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  NMS:
+    full_form: "non maximum suppression"
+    aliases:
+      - "non-maximum suppression"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+
+  MAP_PRECISION:
+    full_form: "mean average precision"
+    aliases:
+      - "map"
+    ambiguous: true
+    preferred_tracks: [T3, T5]
+    notes: "As an evaluation metric; overlaps with MAP (maximum a posteriori). Prefer 'mAP' casing in matching."
+
+  IOU:
+    full_form: "intersection over union"
+    aliases:
+      - "iou"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+
+  PCL:
+    full_form: "point cloud library"
+    ambiguous: true
+    preferred_tracks: [T3, T8]
+    notes: "Also abbreviates 'point cloud' (without 'library') generically. Context determines."
+
+  SIFT:
+    full_form: "scale invariant feature transform"
+    aliases:
+      - "scale-invariant feature transform"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  SURF:
+    full_form: "speeded up robust features"
+    aliases:
+      - "speeded-up robust features"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  ORB:
+    full_form: "oriented fast and rotated brief"
+    aliases:
+      - "oriented-fast-and-rotated-brief"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  BRIEF:
+    full_form: "binary robust independent elementary features"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  BRISK:
+    full_form: "binary robust invariant scalable keypoints"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  AKAZE:
+    full_form: "accelerated kaze features"
+    ambiguous: false
+    preferred_tracks: [T3]
+
+  FCN:
+    full_form: "fully convolutional network"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+
+  NERF:
+    full_form: "neural radiance field"
+    aliases:
+      - "neural radiance fields"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+
+  GS:
+    full_form: "gaussian splatting"
+    aliases:
+      - "3d gaussian splatting"
+      - "3dgs"
+    ambiguous: true
+    preferred_tracks: [T3, T5]
+    notes: "Emerging term; '3DGS' preferred casing. Ambiguous with 'Gram-Schmidt'."
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # T4 · Motion Planning
+  # ─────────────────────────────────────────────────────────────────────────
+
+  RRT:
+    full_form: "rapidly exploring random tree"
+    aliases:
+      - "rapidly-exploring random tree"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  RRTSTAR:
+    full_form: "rapidly exploring random tree star"
+    aliases:
+      - "rrt*"
+      - "rrt-star"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  PRMSTAR:
+    full_form: "probabilistic roadmap star"
+    aliases:
+      - "prm*"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  PRM:
+    full_form: "probabilistic roadmap"
+    aliases:
+      - "probabilistic road map"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  CHOMP:
+    full_form: "covariant hamiltonian optimization for motion planning"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  STOMP:
+    full_form: "stochastic trajectory optimization for motion planning"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  TEB:
+    full_form: "timed elastic band"
+    ambiguous: false
+    preferred_tracks: [T4, T7]
+
+  DWA:
+    full_form: "dynamic window approach"
+    ambiguous: false
+    preferred_tracks: [T4, T7]
+
+  VFH:
+    full_form: "vector field histogram"
+    ambiguous: false
+    preferred_tracks: [T4, T7]
+
+  OMPL:
+    full_form: "open motion planning library"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  BITSTAR:
+    full_form: "batch informed trees"
+    aliases:
+      - "bit*"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  FMTSTAR:
+    full_form: "fast marching tree"
+    aliases:
+      - "fmt*"
+    ambiguous: false
+    preferred_tracks: [T4]
+
+  TO:
+    full_form: "trajectory optimization"
+    ambiguous: true
+    preferred_tracks: [T4, T7]
+    notes: "Ambiguous: also 'topology optimization'. Only match in motion/locomotion context."
+
+  OCP:
+    full_form: "optimal control problem"
+    ambiguous: false
+    preferred_tracks: [T2, T4]
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # T5 · Machine Learning, RL & Foundation Models
+  # ─────────────────────────────────────────────────────────────────────────
+
+  RL:
+    full_form: "reinforcement learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  DRL:
+    full_form: "deep reinforcement learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  MDP:
+    full_form: "markov decision process"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  POMDP:
+    full_form: "partially observable markov decision process"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  CMDP:
+    full_form: "constrained markov decision process"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  PPO:
+    full_form: "proximal policy optimization"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  SAC:
+    full_form: "soft actor critic"
+    aliases:
+      - "soft actor-critic"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  TD3:
+    full_form: "twin delayed deep deterministic policy gradient"
+    aliases:
+      - "twin delayed ddpg"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  DDPG:
+    full_form: "deep deterministic policy gradient"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  A2C:
+    full_form: "advantage actor critic"
+    aliases:
+      - "advantage actor-critic"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  A3C:
+    full_form: "asynchronous advantage actor critic"
+    aliases:
+      - "asynchronous advantage actor-critic"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  TRPO:
+    full_form: "trust region policy optimization"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  DQN:
+    full_form: "deep q network"
+    aliases:
+      - "deep q-network"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  GAE:
+    full_form: "generalized advantage estimation"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  HER:
+    full_form: "hindsight experience replay"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  GAIL:
+    full_form: "generative adversarial imitation learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  AIRL:
+    full_form: "adversarial inverse reinforcement learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  IRL:
+    full_form: "inverse reinforcement learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  BC:
+    full_form: "behavioral cloning"
+    ambiguous: true
+    preferred_tracks: [T5]
+    notes: "Ambiguous outside imitation learning context."
+
+  DAGGER:
+    full_form: "dataset aggregation"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  CQL:
+    full_form: "conservative q learning"
+    aliases:
+      - "conservative q-learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  IQL:
+    full_form: "implicit q learning"
+    aliases:
+      - "implicit q-learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  MBRL:
+    full_form: "model based reinforcement learning"
+    aliases:
+      - "model-based reinforcement learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  TDMPC:
+    full_form: "temporal difference model predictive control"
+    aliases:
+      - "td-mpc"
+      - "td mpc"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  PETS:
+    full_form: "probabilistic ensembles with trajectory sampling"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  PILCO:
+    full_form: "probabilistic inference for learning control"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  MAML:
+    full_form: "model agnostic meta learning"
+    aliases:
+      - "model-agnostic meta-learning"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  CNN:
+    full_form: "convolutional neural network"
+    ambiguous: false
+    preferred_tracks: [T5, T3]
+
+  RNN:
+    full_form: "recurrent neural network"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  LSTM:
+    full_form: "long short term memory"
+    aliases:
+      - "long short-term memory"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  GRU:
+    full_form: "gated recurrent unit"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  MLP:
+    full_form: "multilayer perceptron"
+    aliases:
+      - "multi layer perceptron"
+      - "multi-layer perceptron"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  AE:
+    full_form: "autoencoder"
+    ambiguous: true
+    preferred_tracks: [T5]
+    notes: "Ambiguous: also 'absolute error', 'AE (unit)'. Prefer full form 'autoencoder'."
+
+  VAE:
+    full_form: "variational autoencoder"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  CVAE:
+    full_form: "conditional variational autoencoder"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  GAN:
+    full_form: "generative adversarial network"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  DDPM:
+    full_form: "denoising diffusion probabilistic model"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  DDIM:
+    full_form: "denoising diffusion implicit model"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  VIT:
+    full_form: "vision transformer"
+    ambiguous: false
+    preferred_tracks: [T5, T3]
+
+  BERT:
+    full_form: "bidirectional encoder representations from transformers"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  GPT:
+    full_form: "generative pre trained transformer"
+    aliases:
+      - "generative pre-trained transformer"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  LLM:
+    full_form: "large language model"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  VLM:
+    full_form: "vision language model"
+    aliases:
+      - "vision-language model"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  VLA:
+    full_form: "vision language action model"
+    aliases:
+      - "vision-language-action model"
+    ambiguous: false
+    preferred_tracks: [T5, T6]
+
+  GNN:
+    full_form: "graph neural network"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  GCN:
+    full_form: "graph convolutional network"
+    ambiguous: true
+    preferred_tracks: [T5]
+    notes: "Ambiguous in some fields. In robotics context, prefer T5 graph learning."
+
+  MCTS:
+    full_form: "monte carlo tree search"
+    ambiguous: false
+    preferred_tracks: [T5, T4]
+
+  CMAES:
+    full_form: "covariance matrix adaptation evolution strategy"
+    aliases:
+      - "cma-es"
+      - "cma es"
+    ambiguous: false
+    preferred_tracks: [T5, T1]
+
+  UCB:
+    full_form: "upper confidence bound"
+    ambiguous: true
+    preferred_tracks: [T5]
+    notes: "Ambiguous: also 'UC Berkeley'. Match only in exploration/bandit/RL context."
+
+  RLHF:
+    full_form: "reinforcement learning from human feedback"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  DPO:
+    full_form: "direct preference optimization"
+    ambiguous: false
+    preferred_tracks: [T5]
+
+  YOLO:
+    full_form: "you only look once"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+
+  SSD_DET:
+    full_form: "single shot detector"
+    aliases:
+      - "ssd"
+    ambiguous: true
+    preferred_tracks: [T3, T5]
+    notes: "Conflicts with 'solid state drive' (T8). Match only in object detection context."
+
+  FPN:
+    full_form: "feature pyramid network"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+
+  RCNN:
+    full_form: "region based convolutional neural network"
+    aliases:
+      - "r-cnn"
+      - "region-based cnn"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+
+  DETR:
+    full_form: "detection transformer"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+
+  ACT:
+    full_form: "action chunking with transformers"
+    ambiguous: true
+    preferred_tracks: [T5, T6]
+    notes: "Ambiguous: also 'actor-critic transform', general 'act' verb. Context (imitation, chunking, transformer) required."
+
+  TD:
+    full_form: "temporal difference"
+    ambiguous: true
+    preferred_tracks: [T5]
+    notes: "Very ambiguous. Only match in RL context (prediction, learning, error)."
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # T6 · Manipulation & Robot Kinematics
+  # ─────────────────────────────────────────────────────────────────────────
+
+  FK:
+    full_form: "forward kinematics"
+    ambiguous: false
+    preferred_tracks: [T6]
+
+  IK:
+    full_form: "inverse kinematics"
+    ambiguous: false
+    preferred_tracks: [T6]
+
+  DH:
+    full_form: "denavit hartenberg"
+    aliases:
+      - "denavit-hartenberg"
+      - "dh parameters"
+    ambiguous: false
+    preferred_tracks: [T6]
+
+  URDF:
+    full_form: "unified robot description format"
+    ambiguous: false
+    preferred_tracks: [T6, T8]
+
+  MJCF:
+    full_form: "mujoco configuration format"
+    aliases:
+      - "mujoco xml"
+    ambiguous: false
+    preferred_tracks: [T6, T8]
+
+  SRDF:
+    full_form: "semantic robot description format"
+    ambiguous: false
+    preferred_tracks: [T6, T8]
+
+  TCP:
+    full_form: "tool center point"
+    ambiguous: true
+    preferred_tracks: [T6]
+    notes: "Conflicts with 'transmission control protocol' (T8 networking). Robotics/manipulation context required."
+
+  EEF:
+    full_form: "end effector"
+    aliases:
+      - "end-effector"
+      - "eef frame"
+    ambiguous: false
+    preferred_tracks: [T6]
+
+  GWS:
+    full_form: "grasp wrench space"
+    ambiguous: false
+    preferred_tracks: [T6]
+
+  FCL:
+    full_form: "flexible collision library"
+    ambiguous: false
+    preferred_tracks: [T6, T8]
+
+  SDF:
+    full_form: "signed distance field"
+    aliases:
+      - "signed distance function"
+    ambiguous: true
+    preferred_tracks: [T3, T4, T6]
+    notes: "Also 'simulation description format' (Gazebo). Context (collision, geometry) disambiguates."
+
+  RBDL:
+    full_form: "rigid body dynamics library"
+    ambiguous: false
+    preferred_tracks: [T6, T7]
+
+  KDL:
+    full_form: "kinematics and dynamics library"
+    ambiguous: false
+    preferred_tracks: [T6]
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # T7 · Legged Locomotion & Navigation
+  # ─────────────────────────────────────────────────────────────────────────
+
+  WBC:
+    full_form: "whole body control"
+    aliases:
+      - "whole-body control"
+    ambiguous: true
+    preferred_tracks: [T7]
+    notes: "Also 'white blood cell count'. Robotics context strongly prefers whole-body control."
+
+  ZMP:
+    full_form: "zero moment point"
+    ambiguous: false
+    preferred_tracks: [T7]
+
+  DCM:
+    full_form: "divergent component of motion"
+    ambiguous: true
+    preferred_tracks: [T7]
+    notes: "Also 'direction cosine matrix' in aerospace. Context (legged robot, balance, CoM) disambiguates."
+
+  COM:
+    full_form: "center of mass"
+    aliases:
+      - "com"
+      - "centre of mass"
+    ambiguous: false
+    preferred_tracks: [T7, T6]
+
+  COP:
+    full_form: "center of pressure"
+    aliases:
+      - "centre of pressure"
+    ambiguous: true
+    preferred_tracks: [T7]
+    notes: "Also 'code of practice'. Physical sensor/ground contact context required."
+
+  CMP:
+    full_form: "centroidal momentum pivot"
+    ambiguous: false
+    preferred_tracks: [T7]
+
+  VRP:
+    full_form: "virtual repellent point"
+    ambiguous: false
+    preferred_tracks: [T7]
+
+  LIPM:
+    full_form: "linear inverted pendulum model"
+    ambiguous: false
+    preferred_tracks: [T7]
+
+  CPG:
+    full_form: "central pattern generator"
+    ambiguous: false
+    preferred_tracks: [T7]
+
+  DMP:
+    full_form: "dynamic movement primitive"
+    aliases:
+      - "dynamic movement primitives"
+    ambiguous: false
+    preferred_tracks: [T7, T5]
+
+  AMCL:
+    full_form: "adaptive monte carlo localization"
+    aliases:
+      - "adaptive monte carlo localisation"
+    ambiguous: false
+    preferred_tracks: [T7, T3]
+
+  SRB:
+    full_form: "single rigid body"
+    ambiguous: false
+    preferred_tracks: [T7]
+
+  SRBD:
+    full_form: "single rigid body dynamics"
+    ambiguous: false
+    preferred_tracks: [T7]
+
+  HZD:
+    full_form: "hybrid zero dynamics"
+    ambiguous: false
+    preferred_tracks: [T7]
+
+  IPOPT:
+    full_form: "interior point optimizer"
+    ambiguous: false
+    preferred_tracks: [T1, T7]
+
+  SNOPT:
+    full_form: "sparse nonlinear optimizer"
+    ambiguous: false
+    preferred_tracks: [T1, T7]
+
+  OSQP:
+    full_form: "operator splitting quadratic program"
+    ambiguous: false
+    preferred_tracks: [T1, T7]
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # T8 · Systems, Infrastructure & Tools
+  # ─────────────────────────────────────────────────────────────────────────
+
+  ROS:
+    full_form: "robot operating system"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  TF:
+    full_form: "transform"
+    aliases:
+      - "ros transform"
+      - "tf tree"
+    ambiguous: true
+    preferred_tracks: [T8]
+    notes: "Ambiguous: also 'TensorFlow'. ROS/transform context (listener, broadcaster, frame) required."
+
+  API:
+    full_form: "application programming interface"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  SDK:
+    full_form: "software development kit"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  REST:
+    full_form: "representational state transfer"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  GRPC:
+    full_form: "grpc remote procedure call"
+    aliases:
+      - "grpc"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  DDS:
+    full_form: "data distribution service"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  QOS:
+    full_form: "quality of service"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  OOP:
+    full_form: "object oriented programming"
+    aliases:
+      - "object-oriented programming"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  RTOS:
+    full_form: "real time operating system"
+    aliases:
+      - "real-time operating system"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  GPIO:
+    full_form: "general purpose input output"
+    aliases:
+      - "general-purpose input/output"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  UART:
+    full_form: "universal asynchronous receiver transmitter"
+    aliases:
+      - "universal asynchronous receiver-transmitter"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  SPI:
+    full_form: "serial peripheral interface"
+    ambiguous: true
+    preferred_tracks: [T8]
+    notes: "Also 'service provider interface'. Hardware/embedded context required."
+
+  I2C:
+    full_form: "inter integrated circuit"
+    aliases:
+      - "inter-integrated circuit"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  CAN:
+    full_form: "controller area network"
+    ambiguous: true
+    preferred_tracks: [T8]
+    notes: "Highly ambiguous as a common English word. Only match when adjacent to 'bus', 'protocol', 'FD', 'EtherCAT'."
+
+  CANFD:
+    full_form: "controller area network flexible data rate"
+    aliases:
+      - "can-fd"
+      - "can fd"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  ETHERCAT:
+    full_form: "ethernet for control automation technology"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  CICD:
+    full_form: "continuous integration continuous deployment"
+    aliases:
+      - "ci/cd"
+      - "continuous integration and continuous delivery"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  CI:
+    full_form: "continuous integration"
+    ambiguous: true
+    preferred_tracks: [T8]
+    notes: "Also 'confidence interval'. Software/DevOps context required."
+
+  ECS:
+    full_form: "entity component system"
+    ambiguous: true
+    preferred_tracks: [T8]
+    notes: "Also 'elastic container service'. Game/simulation architecture context required."
+
+  CUDA:
+    full_form: "compute unified device architecture"
+    ambiguous: false
+    preferred_tracks: [T8, T5]
+
+  GPU:
+    full_form: "graphics processing unit"
+    ambiguous: false
+    preferred_tracks: [T8, T5]
+
+  CPU:
+    full_form: "central processing unit"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  FPGA:
+    full_form: "field programmable gate array"
+    aliases:
+      - "field-programmable gate array"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  SOC:
+    full_form: "system on chip"
+    aliases:
+      - "system-on-chip"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  MPI:
+    full_form: "message passing interface"
+    ambiguous: true
+    preferred_tracks: [T8]
+    notes: "Also 'Max Planck Institute'. HPC/parallel computing context required."
+
+  OMP:
+    full_form: "openmp"
+    aliases:
+      - "open mp"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  ASAN:
+    full_form: "address sanitizer"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  TSAN:
+    full_form: "thread sanitizer"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  UBSAN:
+    full_form: "undefined behavior sanitizer"
+    aliases:
+      - "undefined behaviour sanitizer"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  GDB:
+    full_form: "gnu debugger"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  K8S:
+    full_form: "kubernetes"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  JSON:
+    full_form: "javascript object notation"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  YAML:
+    full_form: "yaml ain't markup language"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  HDF5:
+    full_form: "hierarchical data format 5"
+    aliases:
+      - "hierarchical data format version 5"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  RPC:
+    full_form: "remote procedure call"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  POSIX:
+    full_form: "portable operating system interface"
+    ambiguous: false
+    preferred_tracks: [T8]
+
+  HAL:
+    full_form: "hardware abstraction layer"
+    ambiguous: true
+    preferred_tracks: [T8]
+    notes: "Also proper noun (HAL 9000). Embedded/driver context required."

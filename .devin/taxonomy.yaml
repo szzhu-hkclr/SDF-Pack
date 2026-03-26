@@ -1,15 +1,14 @@
-# ─────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
 # .devin/taxonomy.yaml
-# Concise robotics-skill taxonomy (schema layer)
-# Full prose & references  → taxonomy-detail.md
-# Rendered views           → pages/skill.md, pages/knowledge.md
-# ─────────────────────────────────────────────────────────────
+# Robotics-skill taxonomy — vocabulary for all 3 stages
+# Match policy  → .devin/match_policy.yaml
+# Validation    → .devin/validation.yaml
+# Full prose    → taxonomy-detail.md
+# ─────────────────────────────────────────────────────────────────────────────
+version: "1.1"
+schema_version: 2
+last_updated: "2026-03-25"
 
-version: "1.0"
-schema_version: 1
-last_updated: "2026-03-21"
-
-# ── Global definitions ───────────────────────────────────────
 level_definitions:
   L0: Fundamentals & Concepts
   L1: Core Theory & Tools
@@ -19,124 +18,698 @@ level_definitions:
 
 track_types:
   - foundation
+  - methodology
   - application
 
-# ── Tracks ───────────────────────────────────────────────────
+# ── Tracks ────────────────────────────────────────────────────────────────────
+
 tracks:
 
+  # ──────────────────────────────────────────────────────────────────────────
   T1:
     name: Mathematical & Programming Foundations
     type: foundation
-    scope: Math, programming languages, numerical methods, optimization
-    levels:
-      L0: Python/C++/TypeScript/JavaScript basics; Linux CLI; Git
-      L1: Linear algebra; calculus; probability & statistics; Homogeneous Transformation Matrix & Quaternions; ODEs
-      L2: Advanced C++/; numerical methods; convex optimization; scientific Python; React Hooks、Zustand; REST API
-      L3: Nonlinear optimization; Lie groups/algebras; concurrent C++; functional analysis; design pattern
-      L4: Differential geometry; ADMM/stochastic opt; formal methods; CUDA/GPU
+    scope: Mathematics, programming languages, numerical methods, optimization
 
+    levels:
+
+      L0:
+        description: "Python, C++ basics, Linux CLI, Git"
+        skills:
+          python_fundamentals:
+            aliases: ["Python", "Python programming", "Python scripting", "Python3", "Python basics", "Python development"]
+          cpp_basics:
+            aliases: ["C++", "C++ programming", "C++ basics", "pointers", "memory management", "STL", "standard template library"]
+          linux_cli:
+            aliases: ["Linux", "shell scripting", "bash scripting", "Linux command line", "Unix shell", "command line tools"]
+          git_version_control:
+            aliases: ["Git", "version control", "Git version control", "GitHub", "GitLab", "source control", "VCS"]
+        prerequisites: []
+
+      L1:
+        description: "Linear algebra; multivariable calculus; probability & statistics; ODEs"
+        skills:
+          linear_algebra:
+            aliases: ["linear algebra", "matrix decomposition", "eigenvalues", "SVD", "singular value decomposition", "eigendecomposition", "matrix operations"]
+          multivariable_calculus:
+            aliases: ["calculus", "multivariable calculus", "gradients", "Hessian", "partial derivatives", "vector calculus", "Jacobian calculus"]
+          probability_statistics:
+            aliases: ["probability", "statistics", "Bayesian inference", "Bayesian", "Gaussian distribution", "maximum likelihood estimation", "MLE", "probability theory"]
+          ordinary_differential_equations:
+            aliases: ["ODE", "ordinary differential equations", "differential equations", "dynamical systems basics", "first-order ODE"]
+        prerequisites: [T1-L0]
+
+      L2:
+        description: "Advanced C++; numerical methods; convex optimization; Python scientific stack"
+        skills:
+          advanced_cpp:
+            aliases: ["advanced C++", "C++ templates", "RAII", "move semantics", "C++ multithreading", "modern C++", "template metaprogramming"]
+          numerical_methods:
+            aliases: ["numerical methods", "numerical integration", "numerical differentiation", "linear system solving", "numerical analysis", "finite difference methods"]
+          convex_optimization:
+            aliases: ["convex optimization", "quadratic programming", "QP", "linear programming", "LP", "duality theory", "convex programming", "optimization theory"]
+          python_scientific_computing:
+            aliases: ["NumPy", "SciPy", "Matplotlib", "scientific computing", "numerical Python", "Python scientific stack", "pandas"]
+        prerequisites: [T1-L1]
+
+      L3:
+        description: "Nonlinear optimization; Lie groups/algebras; concurrent C++; functional analysis intro"
+        skills:
+          nonlinear_optimization:
+            aliases: ["nonlinear optimization", "SQP", "interior-point methods", "IPOPT", "sequential quadratic programming", "NLP solver", "nonlinear programming"]
+          lie_groups_lie_algebras:
+            aliases: ["Lie groups", "Lie algebras", "SO(3)", "SE(3)", "exponential map", "rotation manifold", "SO3", "SE3", "Lie theory"]
+          cpp_concurrent_programming:
+            aliases: ["concurrent programming", "lock-free data structures", "atomic operations", "C++ concurrency", "thread safety", "memory ordering", "parallel programming C++"]
+          functional_analysis_intro:
+            aliases: ["functional analysis", "calculus of variations", "variational methods", "infinite-dimensional optimization"]
+        prerequisites: [T1-L2]
+
+      L4:
+        description: "Differential geometry; advanced numerical optimization; formal methods; GPU programming"
+        skills:
+          differential_geometry:
+            aliases: ["differential geometry", "Riemannian geometry", "manifold optimization", "geodesics", "curvature", "geometric mechanics"]
+          advanced_numerical_optimization:
+            aliases: ["ADMM", "stochastic optimization", "alternating direction method of multipliers", "distributed optimization", "proximal methods"]
+          formal_methods:
+            aliases: ["formal methods", "temporal logic", "model checking", "LTL", "formal verification", "CTL", "safety property verification"]
+          gpu_programming:
+            aliases: ["GPU programming", "CUDA", "parallel computing", "CUDA programming", "GPGPU", "GPU computing", "CUDA kernels"]
+        prerequisites: [T1-L3]
+
+  # ──────────────────────────────────────────────────────────────────────────
   T2:
     name: Modeling & Control
-    type: Methodology
+    type: methodology
     scope: Kinematics, dynamics, classical & modern control
-    levels:
-      L0: Rigid-body intuition; open/closed-loop concepts
-      L1: FK/IK; Jacobian; PID; state-space representation
-      L2: Rigid-body dynamics; LQR; EKF/UKF; trajectory tracking
-      L3: MPC; impedance/admittance; contact dynamics; adaptive control
-      L4: Whole-body control; centroidal dynamics; contact-implicit opt; H-infinity/passivity
 
+    levels:
+
+      L0:
+        description: "Rigid-body intuition; open/closed-loop concepts"
+        skills:
+          rigid_body_intuition:
+            aliases: ["rigid body", "rigid-body mechanics", "free-body diagram", "mechanics", "Newton's laws"]
+          open_closed_loop:
+            aliases: ["open-loop", "closed-loop", "feedback control", "feedback loop", "control loop"]
+        prerequisites: []
+
+      L1:
+        description: "FK/IK; Jacobian; PID; state-space"
+        skills:
+          forward_kinematics:
+            aliases: ["forward kinematics", "FK", "DH parameters", "Denavit-Hartenberg", "kinematic chain"]
+          inverse_kinematics:
+            aliases: ["inverse kinematics", "IK", "analytical IK", "numerical IK", "kinematic solver"]
+          jacobian:
+            aliases: ["Jacobian", "Jacobian matrix", "velocity kinematics", "manipulator Jacobian", "differential kinematics"]
+          pid_control:
+            aliases: ["PID", "PID control", "PID controller", "proportional-integral-derivative", "PI controller", "PD controller"]
+          state_space_representation:
+            aliases: ["state space", "state-space representation", "controllability", "observability", "LTI system", "state equation"]
+        prerequisites: [T2-L0, T1-L1]
+
+      L2:
+        description: "Rigid-body dynamics; LQR; EKF/UKF; trajectory tracking"
+        skills:
+          rigid_body_dynamics:
+            aliases: ["rigid-body dynamics", "dynamics", "Lagrangian", "Lagrangian mechanics", "Newton-Euler", "equations of motion", "EoM"]
+          lqr_control:
+            aliases: ["LQR", "linear quadratic regulator", "optimal control", "Riccati equation", "ARE"]
+          ekf_ukf:
+            aliases: ["EKF", "UKF", "extended Kalman filter", "unscented Kalman filter", "Kalman filter", "state estimation"]
+          trajectory_tracking_control:
+            aliases: ["trajectory tracking", "computed torque", "computed torque control", "inverse dynamics control", "tracking controller", "feedforward control"]
+        prerequisites: [T2-L1, T1-L1]
+
+      L3:
+        description: "MPC; impedance/admittance; operational space; contact dynamics; adaptive control"
+        skills:
+          model_predictive_control:
+            aliases: ["MPC", "model predictive control", "predictive control", "receding horizon", "NMPC", "nonlinear MPC"]
+          impedance_admittance:
+            aliases: ["impedance control", "admittance control", "compliance control", "force-position control", "mechanical impedance"]
+          operational_space_control:
+            aliases: ["operational space control", "task-space control", "OSC", "end-effector space control", "Khatib control", "task space control"]
+          contact_dynamics_modeling:
+            aliases: ["contact dynamics", "complementarity constraints", "LCP", "linear complementarity problem", "rigid contact model", "contact modeling"]
+          adaptive_control_intro:
+            aliases: ["adaptive control", "MRAC", "model reference adaptive control", "self-tuning control", "parameter adaptation control"]
+        prerequisites: [T2-L2]
+
+      L4:
+        description: "WBC; centroidal dynamics; contact-implicit optimization; robust/passivity-based control"
+        skills:
+          whole_body_control:
+            aliases: ["whole-body control", "WBC", "whole body controller", "task priority", "null-space projection", "QP-based WBC", "multi-contact control"]
+          centroidal_dynamics:
+            aliases: ["centroidal dynamics", "centroidal momentum", "CoM dynamics", "angular momentum", "center of mass dynamics"]
+          contact_implicit_optimization:
+            aliases: ["contact-implicit optimization", "contact-implicit trajectory", "implicit contact planning", "contact sequence optimization"]
+          robust_control:
+            aliases: ["robust control", "H-infinity control", "H∞ control", "robust stability", "minimax control", "uncertainty bound control"]
+          passivity_based_control:
+            aliases: ["passivity-based control", "energy shaping", "passivity", "port-Hamiltonian", "energy-based control"]
+        prerequisites: [T2-L3]
+
+  # ──────────────────────────────────────────────────────────────────────────
   T3:
     name: Perception & State Estimation
-    type: Methodology
-    scope: Vision, LiDAR, point clouds, SLAM, sensor fusion, deep perception
-    levels:
-      L0: Camera models; image processing; point cloud basics
-      L1: Feature matching; stereo vision; IMU; calibration; ICP fundamentals
-      L2: Kalman filters; Visual/LiDAR SLAM; registration pipeline; multi-sensor fusion
-      L3: Factor graphs (GTSAM); detection/segmentation; 6DoF pose; GICP; VIO
-      L4: VLMs (CLIP/SAM2); 3D scene (NeRF/3DGS); scene graphs; tactile perception
+    type: methodology
+    scope: Computer vision, point cloud processing, SLAM, sensor fusion
 
+    levels:
+
+      L0:
+        description: "Camera models; basic image processing; point cloud basics"
+        skills:
+          camera_models:
+            aliases: ["camera model", "pinhole model", "camera distortion", "camera geometry", "intrinsic parameters", "lens distortion model"]
+          basic_image_processing:
+            aliases: ["image processing", "OpenCV", "image filtering", "edge detection", "computer vision basics", "image manipulation"]
+          point_cloud_basics:
+            aliases: ["point cloud", "PCL", "point cloud library", "3D point cloud", "LiDAR data", "depth point cloud"]
+        prerequisites: []
+
+      L1:
+        description: "Feature extraction/matching; stereo vision; IMU pre-integration; sensor calibration; normal estimation; ICP basics"
+        skills:
+          feature_extraction_matching:
+            aliases: ["feature extraction", "feature matching", "ORB", "SIFT", "SURF", "keypoint detection", "feature descriptors", "visual features"]
+          stereo_vision:
+            aliases: ["stereo vision", "depth estimation", "stereo matching", "disparity map", "depth camera", "RGBD", "structured light"]
+          imu_preintegration:
+            aliases: ["IMU", "inertial measurement unit", "IMU pre-integration", "inertial sensor", "gyroscope", "accelerometer", "inertial odometry"]
+          sensor_calibration:
+            aliases: ["sensor calibration", "camera intrinsics", "hand-eye calibration", "extrinsic calibration", "lidar-camera calibration", "camera-robot calibration"]
+          point_cloud_normal_estimation:
+            aliases: ["normal estimation", "point cloud normal", "surface normal estimation", "PCA normal estimation", "k-NN covariance analysis", "surface normals"]
+          rigid_body_registration_fundamentals:
+            aliases: ["rigid body registration", "point cloud registration fundamentals", "SVD registration", "optimal rotation estimation", "centroid alignment", "cross-covariance registration"]
+          basic_icp:
+            aliases: ["ICP", "iterative closest point", "point-to-point ICP", "point-to-plane ICP", "scan matching basics", "nearest neighbor registration"]
+        prerequisites: [T3-L0, T1-L1]
+
+      L2:
+        description: "Kalman filter family; Visual SLAM; LiDAR SLAM; coarse registration (FPFH/SHOT/TEASER++); multi-sensor fusion; particle filter"
+        skills:
+          kalman_filter_family:
+            aliases: ["Kalman filter perception", "recursive state estimation", "KF localization", "EKF localization", "UKF tracking", "Bayesian filter"]
+          visual_slam:
+            aliases: ["visual SLAM", "vSLAM", "ORB-SLAM", "ORB-SLAM3", "visual odometry", "monocular SLAM", "stereo SLAM", "loop closure", "SLAM"]
+          lidar_slam:
+            aliases: ["LiDAR SLAM", "LiDAR odometry", "LOAM", "LIO-SAM", "LiDAR mapping", "3D SLAM", "scan-to-map registration"]
+          point_cloud_coarse_registration:
+            aliases: ["coarse registration", "global registration", "FPFH", "SHOT descriptor", "TEASER++", "FLANN", "3D feature matching", "point cloud alignment"]
+          multi_sensor_fusion:
+            aliases: ["sensor fusion", "multi-sensor fusion", "IMU-camera fusion", "LiDAR-IMU fusion", "data fusion", "tightly-coupled fusion", "loosely-coupled fusion"]
+          particle_filter:
+            aliases: ["particle filter", "sequential Monte Carlo", "Monte Carlo localization", "MCL", "bootstrap filter", "AMCL"]
+        prerequisites: [T3-L1, T1-L1]
+
+      L3:
+        description: "Factor graph optimization; DL detection/segmentation; 6DoF pose; PointNet/++; VIO; GICP"
+        skills:
+          factor_graph_optimization:
+            aliases: ["factor graph", "GTSAM", "iSAM2", "pose graph optimization", "graph SLAM", "bundle adjustment", "nonlinear graph optimization"]
+          deep_learning_detection_segmentation:
+            aliases: ["object detection", "YOLO", "Mask R-CNN", "instance segmentation", "semantic segmentation", "deep learning perception", "2D detection"]
+          pose_estimation_6dof:
+            aliases: ["6DoF pose estimation", "object pose estimation", "6D pose", "pose estimation", "PnP problem", "object localization 3D"]
+          point_cloud_deep_learning:
+            aliases: ["PointNet", "PointNet++", "point cloud deep learning", "3D deep learning", "3D object detection", "point cloud neural network"]
+          visual_inertial_odometry:
+            aliases: ["VIO", "visual-inertial odometry", "VINS-Mono", "visual-inertial SLAM", "VI-odometry", "camera-IMU odometry"]
+          gicp_fine_registration:
+            aliases: ["GICP", "generalized ICP", "fine registration", "local registration", "Mahalanobis ICP", "covariance-weighted ICP", "point cloud fine alignment"]
+        prerequisites: [T3-L2, T1-L2, T5-L0]
+
+      L4:
+        description: "VL models (CLIP/SAM2/Grounding DINO); 3D reconstruction (NeRF/3DGS); scene graphs; BEV perception; tactile perception; open-vocabulary detection"
+        skills:
+          vision_language_models:
+            aliases: ["CLIP", "SigLIP", "SAM2", "Grounding DINO", "vision-language model", "VLM", "visual-language pretraining", "open-vocabulary vision"]
+          scene_reconstruction_3d:
+            aliases: ["NeRF", "neural radiance field", "3D Gaussian splatting", "3DGS", "implicit reconstruction", "neural scene reconstruction", "Gaussian splatting"]
+          scene_graphs:
+            aliases: ["scene graph", "3D scene graph", "semantic scene graph", "spatial relationship graph", "object relationship graph", "scene understanding graph"]
+          bev_perception:
+            aliases: ["BEV", "bird's eye view", "BEV perception", "BEVFusion", "surround view perception", "top-down view perception"]
+          tactile_perception:
+            aliases: ["tactile perception", "GelSight", "DIGIT sensor", "tactile sensor", "haptic sensing", "touch sensing", "tactile feedback sensing"]
+          open_vocabulary_detection:
+            aliases: ["open-vocabulary detection", "open-set detection", "zero-shot detection", "language-guided detection", "open vocabulary segmentation"]
+        prerequisites: [T3-L3, T5-L0]
+
+  # ──────────────────────────────────────────────────────────────────────────
   T4:
     name: Planning & Decision Making
-    type: Methodology
-    scope: Search, sampling-based planning, task planning, behavior architectures
-    levels:
-      L0: Graph search (BFS/DFS); C-space concepts
-      L1: A*; Dijkstra; sampling fundamentals; task decomposition
-      L2: RRT/PRM variants; trajectory optimization; MoveIt2
-      L3: Behavior Trees; PDDL/HTN; LLM-based planning; motion primitives (DMP/ProMP)
-      L4: Multi-robot planning; TAMP; safety verification; online replanning
+    type: methodology
+    scope: Motion planning, task planning, behavior architectures, LLM-based planning
 
+    levels:
+
+      L0:
+        description: "Graph search fundamentals; C-space concepts"
+        skills:
+          graph_search:
+            aliases: ["BFS", "DFS", "breadth-first search", "depth-first search", "graph search", "graph traversal", "tree search"]
+          cspace_concepts:
+            aliases: ["configuration space", "C-space", "joint space", "robot configuration space", "free space", "workspace mapping"]
+        prerequisites: []
+
+      L1:
+        description: "A*/Dijkstra; sampling fundamentals; hierarchical task decomposition"
+        skills:
+          astar_dijkstra:
+            aliases: ["A*", "A-star", "Dijkstra", "shortest path algorithm", "heuristic search", "graph path planning"]
+          sampling_based_fundamentals:
+            aliases: ["probabilistic completeness", "sampling-based planning basics", "random sampling planning", "randomized planning", "probabilistic roadmap basics"]
+          hierarchical_task_decomposition:
+            aliases: ["hierarchical task", "task decomposition", "task hierarchy", "action decomposition", "high-level planning", "subtask planning"]
+        prerequisites: [T4-L0, T1-L0]
+
+      L2:
+        description: "Sampling-based motion planning (RRT/PRM/RRT*); trajectory optimization (CHOMP/STOMP); MoveIt2"
+        skills:
+          sampling_based_motion_planning:
+            aliases: ["RRT", "PRM", "RRT*", "Informed-RRT*", "rapidly-exploring random tree", "probabilistic roadmap", "sampling-based motion planning", "motion planning"]
+          trajectory_optimization:
+            aliases: ["trajectory optimization", "CHOMP", "STOMP", "direct collocation", "path optimization", "optimal trajectory", "motion optimization"]
+          moveit2:
+            aliases: ["MoveIt", "MoveIt2", "OMPL", "motion planning framework", "robot motion planning library", "MoveIt framework"]
+        prerequisites: [T4-L1, T1-L2, T2-L1]
+
+      L3:
+        description: "Behavior architectures (FSM/BT); task planning (PDDL/HTN); LLM planning; motion primitives"
+        skills:
+          behavior_architectures:
+            aliases: ["behavior tree", "BehaviorTree.CPP", "finite state machine", "FSM", "state machine", "BT", "reactive planning", "behavior architecture"]
+          task_planning:
+            aliases: ["PDDL", "HTN", "hierarchical task network", "task planning", "symbolic planning", "automated planning", "AI planning", "action language"]
+          llm_task_planning:
+            aliases: ["LLM planning", "SayCan", "Code-as-Policies", "Inner Monologue", "language model planning", "foundation model planning", "language-grounded planning"]
+          motion_primitives:
+            aliases: ["motion primitives", "DMP", "ProMP", "dynamic movement primitives", "movement primitives", "skill primitives", "learned primitives"]
+        prerequisites: [T4-L2]
+
+      L4:
+        description: "Multi-robot planning; TAMP; safety verification; online replanning & failure recovery"
+        skills:
+          multi_robot_planning:
+            aliases: ["multi-robot planning", "task allocation", "conflict resolution", "multi-agent planning", "fleet planning", "swarm planning", "multi-robot coordination"]
+          tamp:
+            aliases: ["TAMP", "task and motion planning", "combined task-motion planning", "PDDLStream", "integrated planning", "hybrid planning"]
+          safety_verification:
+            aliases: ["safety verification", "reachability analysis", "barrier certificates", "control barrier function", "CBF", "formal safety", "safe planning"]
+          online_replanning:
+            aliases: ["online replanning", "failure recovery", "contingency planning", "reactive replanning", "adaptive planning", "plan repair", "execution monitoring"]
+        prerequisites: [T4-L3]
+
+  # ──────────────────────────────────────────────────────────────────────────
   T5:
     name: Robot Learning
-    type: Methodology
-    scope: ML/DL, RL, imitation learning, diffusion policies, VLAs, world models
-    levels:
-      L0: Supervised/unsupervised learning; DL basics (MLP/CNN/Transformer); PyTorch
-      L1: RL fundamentals (MDP, PPO, SAC); reward design; Gymnasium
-      L2: Imitation learning (BC/DAgger/ACT); domain randomization; sim-to-real; teleoperation
-      L3: Diffusion Policy; Flow Matching; FAST tokenizer; teacher-student; offline RL
-      L4: VLA models & fine-tuning; world models; large-scale data; generalist policies
+    type: methodology
+    scope: Reinforcement learning, imitation learning, generative policies, foundation models
 
+    levels:
+
+      L0:
+        description: "Supervised/unsupervised learning; deep learning basics (MLP/CNN/Transformer); PyTorch"
+        skills:
+          supervised_unsupervised_learning:
+            aliases: ["supervised learning", "unsupervised learning", "machine learning", "classification", "regression", "clustering", "ML fundamentals"]
+          deep_learning_basics:
+            aliases: ["deep learning", "neural network", "MLP", "CNN", "convolutional neural network", "Transformer", "attention mechanism", "deep neural network"]
+          pytorch_basics:
+            aliases: ["PyTorch", "deep learning framework", "PyTorch training", "TensorFlow", "JAX", "autograd", "neural network framework"]
+        prerequisites: []
+
+      L1:
+        description: "RL fundamentals (MDP/Bellman/policy gradient); PPO/SAC; Gymnasium; reward design"
+        skills:
+          rl_fundamentals:
+            aliases: ["reinforcement learning", "RL", "MDP", "Markov decision process", "Bellman equation", "policy gradient", "value function", "reward learning"]
+          ppo_sac_implementation:
+            aliases: ["PPO", "SAC", "proximal policy optimization", "soft actor-critic", "actor-critic", "TD3", "DDPG", "policy optimization", "on-policy RL", "off-policy RL"]
+          gymnasium_interface:
+            aliases: ["Gymnasium", "OpenAI Gym", "Gym interface", "RL environment", "environment wrapper", "observation space", "action space"]
+          reward_function_design:
+            aliases: ["reward function", "reward shaping", "reward design", "reward engineering", "sparse reward", "dense reward", "intrinsic motivation"]
+        prerequisites: [T5-L0, T1-L1]
+
+      L2:
+        description: "Imitation learning (BC/DAgger); ACT; domain randomization; teleoperation; sim-to-real; UMI"
+        skills:
+          imitation_learning:
+            aliases: ["imitation learning", "behavior cloning", "BC", "DAgger", "learning from demonstrations", "LfD", "GAIL"]
+          action_chunking_transformer:
+            aliases: ["ACT", "action chunking transformer", "action chunking", "chunk-based policy", "temporal action chunking"]
+          domain_randomization:
+            aliases: ["domain randomization", "DR", "visual randomization", "dynamics randomization", "sim-to-real transfer", "randomized training"]
+          teleoperation_data_collection:
+            aliases: ["teleoperation", "data collection robot", "leader-follower", "demonstration collection", "human demonstration", "kinesthetic teaching", "LeRobot"]
+          sim_to_real_fundamentals:
+            aliases: ["sim-to-real", "sim2real", "simulation to real", "reality gap", "system identification", "deployment transfer"]
+          umi:
+            aliases: ["UMI", "universal manipulation interface", "in-the-wild manipulation data", "portable demonstration collection"]
+        prerequisites: [T5-L1, T8-L1]
+
+      L3:
+        description: "Diffusion Policy; Flow Matching; FAST tokenizer; teacher-student distillation; data augmentation; Offline RL; multi-task; 3D Diffusion Policy"
+        skills:
+          diffusion_policy:
+            aliases: ["diffusion policy", "DDPM policy", "denoising diffusion policy", "score matching policy", "visuomotor diffusion", "Chi diffusion"]
+          flow_matching:
+            aliases: ["flow matching", "conditional flow matching", "CFM", "rectified flow", "continuous normalizing flow", "CNF"]
+          fast_action_tokenizer:
+            aliases: ["FAST", "action tokenizer", "DCT tokenization", "frequency-domain action compression", "discrete cosine transform tokenizer"]
+          teacher_student_distillation:
+            aliases: ["teacher-student distillation", "privileged information training", "knowledge distillation", "policy distillation", "student policy", "privileged training"]
+          data_augmentation_policy:
+            aliases: ["data augmentation robot", "image perturbation", "action noise injection", "augmentation for robot learning", "visual augmentation robot"]
+          offline_rl:
+            aliases: ["offline RL", "IQL", "CQL", "offline reinforcement learning", "batch RL", "implicit Q-learning", "conservative Q-learning", "D4RL"]
+          multi_task_learning:
+            aliases: ["multi-task learning", "task-conditioned policy", "multi-task RL", "shared representation learning", "task generalization policy"]
+          diffusion_policy_3d:
+            aliases: ["3D diffusion policy", "DP3", "point cloud diffusion policy", "3D visuomotor policy", "Ze diffusion policy"]
+        prerequisites: [T5-L2, T1-L2]
+
+      L4:
+        description: "VLA models; VLA architecture taxonomy; VLA fine-tuning; world models; large-scale data; generalist policies; post-training"
+        skills:
+          vla_models:
+            aliases: ["VLA", "vision-language-action model", "RT-2", "Octo", "OpenVLA", "pi0", "Helix", "GR00T", "Gemini Robotics", "action foundation model"]
+          vla_architecture_taxonomy:
+            aliases: ["early fusion VLA", "EF-VLA", "dual-system VLA", "self-correcting VLA", "VLA architecture", "monolithic VLA", "CoA-VLA"]
+          vla_finetuning:
+            aliases: ["VLA fine-tuning", "SmolVLA", "LoRA adaptation", "OpenVLA-OFT", "pi0-FAST", "PEFT robotics", "parameter-efficient fine-tuning VLA"]
+          world_models:
+            aliases: ["world model", "Dreamer-v3", "TD-MPC2", "RWM", "Cosmos", "Gaussian world model", "model-based RL", "NVIDIA Cosmos", "video prediction model"]
+          large_scale_data_pipelines:
+            aliases: ["Open X-Embodiment", "DROID dataset", "cross-embodiment data", "robot data pipeline", "large-scale robot data", "embodiment data curation"]
+          language_conditioned_policies:
+            aliases: ["language-conditioned policy", "HULC", "language-action alignment", "instruction following robot", "language grounding", "language-guided policy"]
+          generalist_robot_policies:
+            aliases: ["generalist robot policy", "cross-task generalization", "general-purpose robot policy", "foundation robot model", "multi-embodiment policy"]
+          vla_post_training:
+            aliases: ["RLHF for robots", "GRPO", "TGRPO", "VLA alignment", "robot RLHF", "preference optimization robot", "post-training VLA"]
+        prerequisites: [T5-L3, T3-L4]
+
+  # ──────────────────────────────────────────────────────────────────────────
   T6:
     name: Manipulation
     type: application
-    scope: Grasping, force control, dexterous & bimanual manipulation, deformable objects
-    levels:
-      L0: End-effector types; force/form closure basics
-      L1: Grasp planning; pick-and-place pipeline; collision avoidance
-      L2: Force/torque control; bin picking; tool use; flexible objects intro
-      L3: Dexterous manipulation; tactile closed-loop; contact-rich tasks; learned grasping
-      L4: Language-conditioned; generalist policy; bimanual; deformable objects
+    scope: End-effectors, grasping, force control, dexterous manipulation
 
+    levels:
+
+      L0:
+        description: "End-effector types; force closure / form closure"
+        skills:
+          end_effector_types:
+            aliases: ["end-effector", "gripper", "parallel gripper", "vacuum suction", "dexterous hand", "robotic hand", "tool changer"]
+          grasping_concepts:
+            aliases: ["force closure", "form closure", "grasp stability", "grasping concepts", "grasp quality metrics", "contact grasp"]
+        prerequisites: []
+
+      L1:
+        description: "Grasp planning (GraspIt!/analytic); pick-and-place pipeline; collision detection"
+        skills:
+          grasp_planning:
+            aliases: ["grasp planning", "GraspIt!", "analytic grasp synthesis", "grasp synthesis", "grasp generation", "grasp sampling"]
+          pick_and_place_pipeline:
+            aliases: ["pick and place", "pick-and-place", "grasping pipeline", "manipulation pipeline", "pick-place task", "object manipulation pipeline"]
+          collision_detection:
+            aliases: ["collision detection", "obstacle avoidance", "collision avoidance", "collision checking", "path collision checking", "swept volume"]
+        prerequisites: [T6-L0, T2-L1, T3-L0, T4-L1]
+
+      L2:
+        description: "Force/torque control (polishing/assembly); bin picking; tool use; flexible manipulation intro"
+        skills:
+          force_torque_control:
+            aliases: ["force control", "torque control", "force-torque control", "hybrid force-position control", "compliance control", "assembly force control"]
+          bin_picking:
+            aliases: ["bin picking", "unstructured grasping", "cluttered scene grasping", "warehouse picking", "random bin picking"]
+          tool_use:
+            aliases: ["tool use", "tool frame transformation", "tool-center point", "TCP", "robot tool use", "screwdriver manipulation", "tool-frame"]
+          flexible_manipulation_intro:
+            aliases: ["flexible object manipulation", "deformable manipulation intro", "soft object manipulation basics", "cable manipulation basics", "cloth basics"]
+        prerequisites: [T6-L1, T2-L2, T3-L2]
+
+      L3:
+        description: "Dexterous manipulation; tactile closed-loop; contact-rich manipulation (insertion/screwing); learning-based grasping (GraspNet/AnyGrasp)"
+        skills:
+          dexterous_manipulation:
+            aliases: ["dexterous manipulation", "in-hand manipulation", "multi-finger manipulation", "finger gaiting", "regrasping", "dexterous hand control"]
+          tactile_feedback_manipulation:
+            aliases: ["tactile manipulation", "tactile feedback control", "tactile closed-loop", "haptic feedback manipulation", "touch-based manipulation"]
+          contact_rich_manipulation:
+            aliases: ["contact-rich manipulation", "peg-in-hole", "insertion task", "assembly task", "screwing", "precision manipulation", "part assembly"]
+          learning_based_grasping:
+            aliases: ["GraspNet", "AnyGrasp", "learning-based grasping", "deep grasp", "grasp network", "data-driven grasping", "neural grasp planning"]
+        prerequisites: [T6-L2, T2-L3, T3-L3]
+
+      L4:
+        description: "Language-conditioned manipulation; generalist policy; bimanual; deformable objects; human-robot handover"
+        skills:
+          language_conditioned_manipulation:
+            aliases: ["language-conditioned manipulation", "language instruction manipulation", "natural language grasping", "NL manipulation", "instruction-driven manipulation"]
+          generalist_manipulation_policy:
+            aliases: ["generalist manipulation", "cross-task manipulation", "general manipulation policy", "multi-task manipulation", "zero-shot manipulation generalization"]
+          bimanual_manipulation:
+            aliases: ["bimanual manipulation", "dual-arm manipulation", "two-arm manipulation", "bimanual coordination", "cooperative arm manipulation"]
+          deformable_object_manipulation:
+            aliases: ["deformable object manipulation", "cloth manipulation", "cable manipulation", "rope manipulation", "soft body manipulation", "deformable manipulation"]
+          human_robot_handover:
+            aliases: ["human-robot handover", "object handover", "handover task", "human-robot interaction handover", "pass object to human"]
+        prerequisites: [T6-L3, T5-L3]
+
+  # ──────────────────────────────────────────────────────────────────────────
   T7:
     name: Locomotion & Navigation
     type: application
-    scope: Mobile robots, legged locomotion, navigation, sim-to-real locomotion
-    levels:
-      L0: Mobile kinematics; map representations
-      L1: ZMP/gait generation; path planning (A*/D*); localization (AMCL)
-      L2: Centroidal momentum; RL locomotion; Nav2; parallel sim (Isaac Gym/Lab/Genesis)
-      L3: Dynamic locomotion; terrain adaptation; sim-to-real; whole-body; motion tracking
-      L4: Loco-manipulation; parkour; multi-modal locomotion; multi-robot navigation
+    scope: Mobile robots, legged robots, humanoids, navigation, terrain adaptation
 
+    levels:
+
+      L0:
+        description: "Mobile robot kinematics; map representations"
+        skills:
+          mobile_robot_kinematics:
+            aliases: ["mobile robot", "differential drive", "omnidirectional wheel", "mobile robot kinematics", "wheeled robot", "holonomic robot", "nonholonomic robot"]
+          map_representations:
+            aliases: ["occupancy grid", "grid map", "topological map", "costmap", "map representation", "navigation map", "2D environment map"]
+        prerequisites: []
+
+      L1:
+        description: "ZMP theory / gait generation; path planning (A*/D*); localization (AMCL)"
+        skills:
+          zmp_gait_generation:
+            aliases: ["ZMP", "zero moment point", "gait generation", "gait planning", "bipedal gait", "walking pattern generation", "Kajita gait"]
+          path_planning:
+            aliases: ["path planning", "global path planning", "D*", "navigation planning", "robot path finding", "waypoint planning"]
+          localization:
+            aliases: ["AMCL", "localization", "adaptive Monte Carlo localization", "particle filter localization", "map-based localization", "robot localization"]
+        prerequisites: [T7-L0, T2-L1, T4-L1]
+
+      L2:
+        description: "Centroidal momentum; RL locomotion (PPO/SAC/FastTD3); Nav2; parallel simulation (Isaac Gym/Genesis); Humanoid-Gym"
+        skills:
+          centroidal_momentum:
+            aliases: ["centroidal momentum locomotion", "angular momentum humanoid", "CoM locomotion control", "center of mass locomotion", "momentum-based locomotion"]
+          rl_locomotion:
+            aliases: ["RL locomotion", "locomotion policy", "PPO locomotion", "SAC locomotion", "deep RL walking", "neural locomotion", "FastTD3", "learned locomotion policy"]
+          navigation_stack:
+            aliases: ["Nav2", "navigation stack", "ROS navigation", "move base", "local planner", "global planner", "DWA planner", "TEB planner", "costmap navigation"]
+          parallel_simulation_training:
+            aliases: ["Isaac Gym", "Isaac Lab", "Genesis simulation", "parallel simulation", "GPU simulation training", "massively parallel RL", "vectorized environments"]
+          humanoid_gym:
+            aliases: ["Humanoid-Gym", "humanoid training framework", "humanoid simulation framework", "zero-shot sim-to-real humanoid", "humanoid RL framework"]
+        prerequisites: [T7-L1, T5-L1, T8-L1]
+
+      L3:
+        description: "Dynamic locomotion (running/jumping/stairs); terrain adaptation; sim-to-real (ASAP/FastSAC); whole-body locomotion; motion tracking/retargeting"
+        skills:
+          dynamic_locomotion:
+            aliases: ["dynamic locomotion", "running", "jumping", "stair climbing", "agile locomotion", "bipedal running", "FastSAC", "FastTD3 locomotion"]
+          terrain_adaptation:
+            aliases: ["terrain adaptation", "perception-driven locomotion", "rough terrain walking", "height map locomotion", "adaptive gait", "terrain-aware locomotion policy"]
+          sim_to_real_locomotion:
+            aliases: ["sim-to-real locomotion", "teacher-student locomotion", "ASAP", "locomotion transfer", "locomotion sim-to-real gap", "locomotion deployment"]
+          whole_body_locomotion:
+            aliases: ["whole-body locomotion", "full-body motion control", "upper-lower body coordination", "whole body loco control", "loco-manipulation basics"]
+          motion_tracking:
+            aliases: ["motion tracking", "human motion retargeting", "motion imitation", "motion capture robot", "kinematic retargeting", "mocap to robot", "motion reference policy"]
+        prerequisites: [T7-L2, T5-L2, T8-L2]
+
+      L4:
+        description: "Loco-manipulation (VIRAL); parkour/extreme locomotion; whole-body skills; multi-robot navigation; adversarial locomotion (ALMI)"
+        skills:
+          loco_manipulation:
+            aliases: ["loco-manipulation", "mobile manipulation legged", "VIRAL", "legged manipulation", "walking manipulation", "locomotion manipulation synergy"]
+          parkour_extreme_locomotion:
+            aliases: ["parkour", "extreme locomotion", "agile locomotion advanced", "free-running robot", "high-dynamic motion", "obstacle traversal robot"]
+          whole_body_skills:
+            aliases: ["whole-body skills", "rolling locomotion", "crawling mode", "locomotion mode switching", "complex locomotion skill", "multi-modal locomotion"]
+          multi_robot_navigation:
+            aliases: ["multi-robot navigation", "multi-agent navigation", "swarm navigation", "fleet navigation", "cooperative navigation", "formation control navigation"]
+          adversarial_locomotion:
+            aliases: ["adversarial locomotion", "ALMI", "adversarial motion imitation", "motion imitation adversarial", "NeurIPS ALMI locomotion"]
+        prerequisites: [T7-L3, T6-L2]
+
+  # ──────────────────────────────────────────────────────────────────────────
   T8:
     name: Systems Engineering & Infrastructure
     type: foundation
-    scope: Linux, ROS2, simulation platforms, real-time systems, safety, deployment
+    scope: ROS2, simulation, real-time systems, hardware protocols, safety standards
+
     levels:
-      L0: Linux admin; Docker; networking (TCP/UDP); WebSocket
-      L1: ROS2 fundamentals; URDF/Xacro; simulation basics; serial comms; Web-based HMI
-      L2: Advanced ROS2 (lifecycle/DDS); MuJoCo/Genesis; PREEMPT_RT; EtherCAT; CAN; structured logging; system monitoring; offline-first architecture
-      L3: Architecture patterns; Isaac Lab/Sim; safety standards (ISO); RTOS; ManiSkill
-      L4: Full system design; production deploy; AI infra/MLOps; certification; hard RT
 
-# ── Cross-references (inter-track links) ─────────────────────
+      L0:
+        description: "Linux admin; Docker; networking fundamentals"
+        skills:
+          linux_sysadmin:
+            aliases: ["Linux", "Linux administration", "system administration", "Linux server", "package management", "systemd", "Ubuntu server"]
+          docker_basics:
+            aliases: ["Docker", "containerization", "Docker container", "Docker image", "Docker Compose", "DevOps basics"]
+          networking_fundamentals:
+            aliases: ["networking", "TCP", "UDP", "TCP/IP", "network protocols", "socket programming", "IP networking"]
+        prerequisites: []
+
+      L1:
+        description: "ROS2 fundamentals; URDF/Xacro; simulation intro (Gazebo/MuJoCo); serial communication"
+        skills:
+          ros2_fundamentals:
+            aliases: ["ROS2", "ROS 2", "Robot Operating System", "ROS", "ros2 topics", "ros2 services", "ros2 actions", "rosbag2", "ros2 nodes", "pub-sub ROS"]
+          urdf_xacro:
+            aliases: ["URDF", "Xacro", "robot description", "robot model file", "joint link definition", "SDF", "kinematic model file"]
+          simulation_intro:
+            aliases: ["Gazebo", "MuJoCo basics", "robot simulation", "physics simulation", "simulation environment", "MJCF", "Gazebo simulation"]
+          serial_communication:
+            aliases: ["serial communication", "RS-232", "RS-485", "UART", "serial port", "hardware interface", "MCU communication", "motor driver interface"]
+        prerequisites: [T8-L0]
+
+      L2:
+        description: "Advanced ROS2 (lifecycle/DDS QoS); MuJoCo setup; Genesis; PREEMPT_RT; EtherCAT; CAN/CANopen"
+        skills:
+          advanced_ros2:
+            aliases: ["advanced ROS2", "lifecycle nodes", "ROS2 composition", "DDS QoS", "real-time ROS2", "ROS2 executor", "QoS tuning"]
+          mujoco_environment_setup:
+            aliases: ["MuJoCo", "MuJoCo Gymnasium wrapper", "MuJoCo contact physics tuning", "MuJoCo setup", "dm_control", "MuJoCo environment"]
+          genesis_simulation:
+            aliases: ["Genesis", "Genesis simulation", "Genesis platform", "multi-physics Genesis", "Genesis GPU acceleration", "Genesis Python API"]
+          preempt_rt:
+            aliases: ["PREEMPT_RT", "real-time Linux kernel", "RT kernel", "real-time kernel patch", "kernel preemption", "RT Linux", "real-time OS Linux"]
+          ethercat_protocol:
+            aliases: ["EtherCAT", "IgH EtherCAT", "industrial Ethernet", "EtherCAT master", "real-time Ethernet", "fieldbus EtherCAT"]
+          can_canopen:
+            aliases: ["CAN bus", "CANopen", "CAN protocol", "controller area network", "CANopen protocol", "motor CAN interface"]
+        prerequisites: [T8-L1]
+
+      L3:
+        description: "Architecture patterns; Isaac Lab/Sim; safety standards (ISO 10218/13849); RT scheduling; ManiSkill/SAPIEN; Newton Physics Engine; MuJoCo Playground"
+        skills:
+          system_architecture_patterns:
+            aliases: ["system architecture", "pub-sub pattern", "pipeline architecture", "request-reply pattern", "distributed robotics architecture", "software architecture patterns"]
+          isaac_lab:
+            aliases: ["Isaac Lab", "Isaac Sim", "Isaac Gym", "NVIDIA Isaac", "GPU parallel environments", "large-scale RL simulation", "IsaacGym"]
+          safety_standards:
+            aliases: ["ISO 10218", "ISO 13849", "robot safety standard", "FMEA", "hazard analysis", "functional safety robotics", "CE safety certification"]
+          realtime_scheduling:
+            aliases: ["real-time scheduling", "priority inversion", "priority inheritance", "RTOS", "RT scheduling", "deterministic scheduling", "preemption control"]
+          maniskill:
+            aliases: ["ManiSkill", "SAPIEN", "ManiSkill2", "GPU-parallel manipulation simulation", "manipulation simulation benchmark"]
+          newton_physics_engine:
+            aliases: ["Newton physics engine", "NVIDIA Newton", "open-source GPU physics", "Newton DeepMind Disney", "GPU physics engine open-source"]
+          mujoco_playground:
+            aliases: ["MuJoCo Playground", "Zakka MuJoCo Playground", "GPU-accelerated MuJoCo", "MuJoCo Playground framework", "humanoid locomotion MuJoCo benchmark"]
+        prerequisites: [T8-L2]
+
+      L4:
+        description: "Full system architecture; production deployment (OTA/monitoring); AI infrastructure; certification (CE/UL); hard real-time design; HumanoidVerse"
+        skills:
+          full_system_architecture:
+            aliases: ["full-stack robotics", "complete system architecture", "perception-planning-control pipeline", "end-to-end system integration", "system integration robotics"]
+          production_deployment:
+            aliases: ["OTA update", "over-the-air update", "production deployment", "monitoring robotics", "graceful degradation", "field deployment robotics", "fleet management software"]
+          ai_infrastructure:
+            aliases: ["AI infrastructure", "MLOps", "multimodal data pipeline", "training cluster", "ML infrastructure", "GPU cluster management", "training infrastructure"]
+          certification_processes:
+            aliases: ["CE certification", "UL certification", "CCC certification", "product certification", "regulatory compliance robotics", "robot certification"]
+          hard_realtime_design:
+            aliases: ["hard real-time", "thread priority design", "global DDS QoS configuration", "deterministic control design", "hard RT system", "failure mode analysis RT"]
+          humanoidverse:
+            aliases: ["HumanoidVerse", "multi-simulator training", "cross-simulator framework", "unified humanoid training", "IsaacGym Genesis unified pipeline"]
+        prerequisites: [T8-L3]
+
+# ── Cross-references (inter-track dependency links) ───────────────────────────
 cross_references:
-  - from: T2-L2    # EKF/UKF for state estimation
-    to:   T3-L2    # Kalman filter family
-    note: State estimation shared across control and perception
-
-  - from: T5-L2    # sim-to-real fundamentals
-    to:   T7-L2    # parallel sim training (Isaac Gym/Lab/Genesis)
-    note: Sim-to-real pipeline shared across learning and locomotion
-
-  - from: T5-L4    # VLA models
-    to:   T6-L4    # language-conditioned manipulation
-    note: VLA outputs drive manipulation policies
-
-  - from: T2-L4    # whole-body control
-    to:   T7-L3    # whole-body locomotion control
-    note: WBC theory applied in locomotion
-
-# ── Validation constraints ───────────────────────────────────
-validation:
-  required_fields:
-    track: [name, type, scope, levels]
-    levels: [L0, L1, L2, L3, L4]
-  track_count: 8
-  level_count_per_track: 5
-  valid_types: [foundation, application]
-  naming_pattern: "T[1-8]"
-  level_pattern: "L[0-4]"
+  - from: T2-L2
+    to:   T3-L2
+    note: "EKF/UKF (ekf_ukf) shared between control and perception tracks"
+  - from: T1-L1
+    to:   T3-L1
+    note: "SVD and eigendecomposition prerequisite for normal estimation and rigid-body registration"
+  - from: T1-L1
+    to:   T2-L1
+    note: "Linear algebra and calculus prerequisite for kinematics and PID"
+  - from: T5-L0
+    to:   T3-L3
+    note: "CNN/deep learning basics prerequisite for YOLO, Mask R-CNN, PointNet"
+  - from: T5-L0
+    to:   T3-L4
+    note: "Transformer architecture prerequisite for VL models (CLIP, SAM2, Grounding DINO)"
+  - from: T5-L1
+    to:   T7-L2
+    note: "PPO/SAC prerequisite for RL locomotion training"
+  - from: T8-L1
+    to:   T5-L2
+    note: "Simulation intro (MuJoCo/Gazebo) prerequisite for sim-to-real and domain randomization"
+  - from: T8-L2
+    to:   T7-L2
+    note: "Isaac Gym / Genesis prerequisite for large-scale parallel RL locomotion training"
+  - from: T8-L1
+    to:   T4-L2
+    note: "ROS2 prerequisite for MoveIt2 integration"
+  - from: T2-L1
+    to:   T4-L2
+    note: "FK/IK prerequisite for mapping C-space planning to joint-space execution"
+  - from: T2-L1
+    to:   T6-L1
+    note: "FK/IK and Jacobian prerequisite for grasp planning and pick-and-place"
+  - from: T2-L2
+    to:   T7-L2
+    note: "Rigid-body dynamics prerequisite for centroidal momentum derivation"
+  - from: T2-L3
+    to:   T6-L3
+    note: "Impedance/admittance control prerequisite for contact-rich manipulation"
+  - from: T2-L4
+    to:   T7-L3
+    note: "WBC prerequisite for whole-body locomotion control"
+  - from: T3-L3
+    to:   T6-L3
+    note: "6DoF pose estimation and PointNet prerequisite for learning-based grasping (GraspNet/AnyGrasp)"
+  - from: T3-L4
+    to:   T5-L4
+    note: "VL models (CLIP/SigLIP) prerequisite for VLA visual encoding"
+  - from: T5-L2
+    to:   T7-L3
+    note: "Domain randomization and sim-to-real fundamentals prerequisite for locomotion sim-to-real"
+  - from: T5-L3
+    to:   T6-L4
+    note: "Diffusion Policy/VLA prerequisite for language-conditioned and generalist manipulation"
+  - from: T1-L3
+    to:   T3-L3
+    note: "Lie groups (SO3/SE3), tangent-space Jacobian prerequisite for GICP fine registration"
+  - from: T1-L2
+    to:   T3-L3
+    note: "Cholesky decomposition, LM trust-region (convex opt.) prerequisite for GICP fine registration"
+  - from: T5-L3
+    to:   T5-L4
+    note: "Diffusion Policy/Flow Matching as action decoder prerequisite for VLA action head"
+  - from: T8-L3
+    to:   T7-L3
+    note: "Isaac Lab / Genesis GPU-parallel simulation prerequisite for dynamic locomotion training at scale"

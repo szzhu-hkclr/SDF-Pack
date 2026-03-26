@@ -1,0 +1,71 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# .devin/governance.yaml
+# Git-native governance file — consumed by all stages for consistent versioning and change tracking.
+# structured proposal lifecycle (draft → review → approved) with changelog and version history
+# ─────────────────────────────────────────────────────────────────────────────
+version: "1.1"
+# schema_version and epoch REMOVED — Git tags are the version.
+# The CI job `validate-taxonomy.yaml` enforces additive-only
+# by diffing against the previous release tag.
+schema_version: 2
+last_updated: "2026-03-25"
+
+# ── Governance Policy ──────────────────────────────────────
+governance:
+  # Rule: between any two consecutive Git tags on `taxonomy.yaml`,
+  # the diff must be additive-only (new skills, new aliases,
+  # new deprecated: true flags). Renames, deletions, and
+  # semantic reassignments are rejected by the diff checker.
+  additive_only: true
+  
+  # Deprecation triggers downstream rewrites automatically.
+  deprecation_policy:
+    auto_migrate_bullets: true      # rewrite bullet YAML refs
+    auto_migrate_skills: true       # rewrite skill.md frontmatter
+    migration_log: "data/_migrations/log.yaml"
+  
+  # Reserved track IDs for future expansion.
+  # No epoch concept — just a simple reservation list.
+  reserved_tracks: ["T9", "T10"]
+
+# ── Proposal Lifecycle ─────────────────────────────────────
+proposal_lifecycle:
+  # Single queue, but with mandatory provenance tagging.
+  queue_path: "data/_proposals/pending.yaml"
+  accepted_path: "data/_proposals/accepted/"
+  rejected_path: "data/_proposals/rejected/"
+  
+  # Every proposal MUST declare its source type.
+  # This gives the reviewer context without splitting the queue.
+  required_fields:
+    - skill_name_candidate
+    - suggested_track
+    - suggested_level
+    - source_type           # enum: "repo_analysis" | "jd_parsing"
+    - source_id             # repo_id or jd_id
+    - confidence_score      # from alias_match_policy
+    - evidence              # list of {file, lines, summary} or {jd_source, context_window}
+    - proposed_aliases
+    - closest_existing      # (taxonomy_ref, skill_name) of nearest match
+    - proposed_by           # "extractor-v2.1" or "orchestrator-v3.0"
+    - proposed_at           # ISO timestamp
+  
+  # Lifecycle rules
+  staleness_timeout_days: 90     # auto-close after 90 days unreviewed
+  dedup_key: "skill_name_candidate"  # merge duplicate proposals
+  dedup_strategy: "merge_evidence"   # combine evidence from all sources
+  
+  # On acceptance: auto-generate the taxonomy.yaml diff as a
+  # Git commit (or PR if using GitHub flow).
+  on_accept:
+    auto_commit: true
+    commit_message_template: "taxonomy: add {skill_name} to {taxonomy_ref}"
+    regenerate_lock: false  # no lock file — Git tag is the pin
+    trigger_downstream:
+      - "validate_taxonomy_refs.py"   # re-validate all data/
+      - "sync-manifest.json"          # update sync timestamps
+  
+  on_reject:
+    move_to: "data/_proposals/rejected/"
+    record_rationale: true            # reviewer must provide reason
+    feed_calibration: true            # rejected proposals adjust threshold
