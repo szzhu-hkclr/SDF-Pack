@@ -1,5 +1,5 @@
 # ═════════════════════════════════════════════════════════════════════════════
-# FILE: .devin/acronyms.yaml
+# FILE: config/acronyms.yaml
 # VERSION: 1.1 / schema_version: 2
 # LAST UPDATED: 2026-03-25
 #
@@ -212,6 +212,47 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T1, T5]
 
+  ADMM:
+    full_form: "alternating direction method of multipliers"
+    ambiguous: false
+    preferred_tracks: [T1, T5]
+
+  RAII:
+    full_form: "resource acquisition is initialization"
+    ambiguous: false
+    preferred_tracks: [T1, T8]
+    notes: "C++ RAII idiom — Constructor Acquires/Destructor Releases pattern."
+
+  STL:
+    full_form: "standard template library"
+    ambiguous: false
+    preferred_tracks: [T1, T8]
+    notes: "C++ STL; context (C++ code, containers, iterators) distinguishes from other meanings."
+
+  VCS:
+    full_form: "version control system"
+    ambiguous: true
+    preferred_tracks: [T1]
+    notes: "Heavily ambiguous (also 'very small computer', 'vehicle control system'). Only match in version-control/Git context."
+
+  CTL:
+    full_form: "computation tree logic"
+    ambiguous: false
+    preferred_tracks: [T1]
+    notes: "Temporal logic for model checking; distinct from LTL (linear temporal logic)."
+
+  LTL:
+    full_form: "linear temporal logic"
+    ambiguous: false
+    preferred_tracks: [T1]
+    notes: "Temporal logic for formal verification; distinct from CTL (computation tree logic)."
+
+  GPGPU:
+    full_form: "general purpose graphics processing unit computing"
+    ambiguous: false
+    preferred_tracks: [T1, T5]
+    notes: "GPU computing for non-graphics workloads; context (CUDA, parallel compute) distinguishes."
+
   # ─────────────────────────────────────────────────────────────────────────
   # T2 · Control Theory & Dynamics
   # ─────────────────────────────────────────────────────────────────────────
@@ -251,6 +292,12 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T2]
 
+  OSC:
+    full_form: "operational space control"
+    ambiguous: false
+    preferred_tracks: [T2]
+    notes: "Khatib 1985 operational space control; distinct from OSC (oscillator)."
+
   LQR:
     full_form: "linear quadratic regulator"
     ambiguous: false
@@ -275,6 +322,12 @@ acronyms:
       - "ilqg"
     ambiguous: false
     preferred_tracks: [T2]
+
+  LCP:
+    full_form: "linear complementarity problem"
+    ambiguous: false
+    preferred_tracks: [T2, T3]
+    notes: "Formulation for contact dynamics; relates to complementarity constraints in rigid-body contact."
 
   LMPC:
     full_form: "learning model predictive control"
@@ -315,6 +368,12 @@ acronyms:
     preferred_tracks: [T3]
     notes: "Also 'power factor'. Robotics context strongly prefers particle filter."
 
+  MCL:
+    full_form: "Monte Carlo localization"
+    ambiguous: true
+    preferred_tracks: [T3]
+    notes: "Also 'Mission Control Language' or 'Michigan Cycling League'. Robotics context (AMCL, particle filter) preferred."
+
   ADRC:
     full_form: "active disturbance rejection control"
     ambiguous: false
@@ -324,6 +383,12 @@ acronyms:
     full_form: "extended state observer"
     ambiguous: false
     preferred_tracks: [T2]
+
+  MRAC:
+    full_form: "model reference adaptive control"
+    ambiguous: false
+    preferred_tracks: [T2]
+    notes: "Adaptive control technique where a reference model defines desired dynamics."
 
   SMC:
     full_form: "sliding mode control"
@@ -515,6 +580,12 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T3]
 
+  GTSAM:
+    full_form: "georgia tech smoothing and mapping"
+    ambiguous: false
+    preferred_tracks: [T3]
+    notes: "Georgia Tech factor graph optimization library; used in SLAM and pose graph optimization."
+
   NDT:
     full_form: "normal distributions transform"
     ambiguous: false
@@ -524,6 +595,12 @@ acronyms:
     full_form: "truncated least squares estimation and semidefinite relaxation"
     ambiguous: false
     preferred_tracks: [T3]
+
+  FLANN:
+    full_form: "fast library for approximate nearest neighbors"
+    ambiguous: false
+    preferred_tracks: [T3]
+    notes: "Point cloud library for fast nearest-neighbor search in registration."
 
   FPFH:
     full_form: "fast point feature histograms"
@@ -578,6 +655,12 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T3]
 
+  CLIP:
+    full_form: "contrastive language image pretraining"
+    ambiguous: false
+    preferred_tracks: [T3, T5]
+    notes: "OpenAI vision-language foundation model; used in open-vocabulary detection and robotic perception."
+
   ROI:
     full_form: "region of interest"
     ambiguous: false
@@ -610,6 +693,12 @@ acronyms:
     ambiguous: true
     preferred_tracks: [T3, T8]
     notes: "Also abbreviates 'point cloud' (without 'library') generically. Context determines."
+
+  SAM2:
+    full_form: "segment anything 2"
+    ambiguous: false
+    preferred_tracks: [T3]
+    notes: "Meta AI's Segment Anything Model 2; vision foundation model for segmentation."
 
   SIFT:
     full_form: "scale invariant feature transform"
@@ -721,6 +810,12 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T4, T7]
 
+  DFS:
+    full_form: "depth first search"
+    ambiguous: false
+    preferred_tracks: [T4]
+    notes: "Graph search algorithm; often paired with BFS in path planning contexts."
+
   VFH:
     full_form: "vector field histogram"
     ambiguous: false
@@ -738,12 +833,42 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T4]
 
+  BFS:
+    full_form: "breadth first search"
+    ambiguous: false
+    preferred_tracks: [T4]
+    notes: "Graph search algorithm; foundational for grid-based path planning."
+
+  BT:
+    full_form: "behavior tree"
+    ambiguous: false
+    preferred_tracks: [T4]
+    notes: "Hierarchical execution model for robot decision-making."
+
   FMTSTAR:
     full_form: "fast marching tree"
     aliases:
       - "fmt*"
     ambiguous: false
     preferred_tracks: [T4]
+
+  HTN:
+    full_form: "hierarchical task network"
+    ambiguous: false
+    preferred_tracks: [T4]
+    notes: "AI planning formalism; decomposes high-level tasks into sub-plans."
+
+  PDDL:
+    full_form: "planning domain definition language"
+    ambiguous: false
+    preferred_tracks: [T4]
+    notes: "Standard language for expressing planning domain models in AI."
+
+  TAMP:
+    full_form: "task and motion planning"
+    ambiguous: false
+    preferred_tracks: [T4]
+    notes: "Integrates high-level task planning with low-level motion planning."
 
   TO:
     full_form: "trajectory optimization"
@@ -822,6 +947,12 @@ acronyms:
       - "asynchronous advantage actor-critic"
     ambiguous: false
     preferred_tracks: [T5]
+
+  ALOHA:
+    full_form: "actuator latency optimal hindsight architecture"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "Stanford bimanual teleoperation dataset and learning setup; also used as umbrella term for imitation learning from teleoperation."
 
   TRPO:
     full_form: "trust region policy optimization"
@@ -1019,6 +1150,12 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T5]
 
+  GR00T:
+    full_form: "generalist robot 00 transformer"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "NVIDIA humanoid robot foundation model; vision-language-action VLA model for manipulation."
+
   GCN:
     full_form: "graph convolutional network"
     ambiguous: true
@@ -1044,15 +1181,45 @@ acronyms:
     preferred_tracks: [T5]
     notes: "Ambiguous: also 'UC Berkeley'. Match only in exploration/bandit/RL context."
 
+  UMI:
+    full_form: "universal manipulation interface"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "Stanford dexterous manipulation interface using wrist cameras and grippers."
+
   RLHF:
     full_form: "reinforcement learning from human feedback"
     ambiguous: false
     preferred_tracks: [T5]
 
+  GRPO:
+    full_form: "group relative policy optimization"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "VLA post-training method; used in GR00T and π0 model training."
+
+  TGRPO:
+    full_form: "theory-guided relative policy optimization"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "VLA post-training method combining GRPO with theoretical constraints."
+
+  RWM:
+    full_form: "reward world model"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "World model component that predicts rewards; used in Dreamer-v3 and TD-MPC2."
+
   DPO:
     full_form: "direct preference optimization"
     ambiguous: false
     preferred_tracks: [T5]
+
+  DR:
+    full_form: "domain randomization"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "Sim-to-real transfer technique; randomizes simulation parameters to improve generalization."
 
   YOLO:
     full_form: "you only look once"
@@ -1096,6 +1263,46 @@ acronyms:
     ambiguous: true
     preferred_tracks: [T5]
     notes: "Very ambiguous. Only match in RL context (prediction, learning, error)."
+
+  AWAC:
+    full_form: "Advantage Weighted Actor-Critic"
+    ambiguous: true
+    preferred_tracks: [T5]
+    notes: "Also 'AWAC' as a general acronym (aircraft/wireless). Robotics context required — AWAC algorithm in offline RL."
+
+  JAX:
+    full_form: "jax autograd"
+    aliases:
+      - "google jax"
+    ambiguous: true
+    preferred_tracks: [T5]
+    notes: "Also a common name. Only match in ML/autograd context (JAX is NumPy+autograd)."
+
+  FAST:
+    full_form: "frequency-domain action compression tokenizer"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "FAST action tokenizer (DCT-based); distinct from FAST (adaptive optics, local feature detector)."
+
+  CFM:
+    full_form: "continuous normalizing flow"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "Continuous normalizing flow; distinct from CFM (cloud formation model, cubic foot per minute)."
+
+  CNF:
+    full_form: "continuous normalizing flow"
+    aliases:
+      - "continuous normalising flow"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "In robotics: continuous normalizing flow ( rectifier flows). Also 'conjunctive normal form' in logic — disambiguate by context."
+
+  HULC:
+    full_form: "hierarchy universal language conditioned policy"
+    ambiguous: false
+    preferred_tracks: [T5]
+    notes: "HULC policy (Stanford); language-conditioned manipulation. Also 'HUELC' in some contexts."
 
   # ─────────────────────────────────────────────────────────────────────────
   # T6 · Manipulation & Robot Kinematics
@@ -1251,6 +1458,18 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T7, T3]
 
+  ALMI:
+    full_form: "adversarial learning for mobile manipulation"
+    ambiguous: false
+    preferred_tracks: [T7]
+    notes: "LeCity robot locomotion-paper acronym; adversarial approach to loco-manipulation."
+
+  ASAP:
+    full_form: "asynchronous spatial awareness planning"
+    ambiguous: false
+    preferred_tracks: [T7]
+    notes: "Sim-to-real locomotion framework for quadruped robots."
+
   SRB:
     full_form: "single rigid body"
     ambiguous: false
@@ -1281,6 +1500,12 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T1, T7]
 
+  VIRAL:
+    full_form: "vision-inertial robot action learning"
+    ambiguous: false
+    preferred_tracks: [T7]
+    notes: "UC Berkeley loco-manipulation policy learning framework using vision and IMU."
+
   # ─────────────────────────────────────────────────────────────────────────
   # T8 · Systems, Infrastructure & Tools
   # ─────────────────────────────────────────────────────────────────────────
@@ -1289,6 +1514,12 @@ acronyms:
     full_form: "robot operating system"
     ambiguous: false
     preferred_tracks: [T8]
+
+  ROS2:
+    full_form: "robot operating system 2"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "Next-generation ROS; DDS-based middleware with real-time support and improved security."
 
   TF:
     full_form: "transform"
@@ -1359,6 +1590,12 @@ acronyms:
     ambiguous: false
     preferred_tracks: [T8]
 
+  UDP:
+    full_form: "user datagram protocol"
+    ambiguous: true
+    preferred_tracks: [T8]
+    notes: "Also 'universal distillation protocol' (T5). Context (networking vs. ML) disambiguates."
+
   SPI:
     full_form: "serial peripheral interface"
     ambiguous: true
@@ -1390,6 +1627,12 @@ acronyms:
     full_form: "ethernet for control automation technology"
     ambiguous: false
     preferred_tracks: [T8]
+
+  FMEA:
+    full_form: "failure mode and effects analysis"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "Safety engineering standard; evaluates potential failure modes in robotic systems."
 
   CICD:
     full_form: "continuous integration continuous deployment"
@@ -1479,6 +1722,62 @@ acronyms:
     full_form: "kubernetes"
     ambiguous: false
     preferred_tracks: [T8]
+
+  AIMRT:
+    full_form: "ai message runtime"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "Alibaba DAMO Academy ROS2-compatible middleware for robotics; distinct from standard ROS2/DDS."
+
+  GDR:
+    full_form: "gpu direct rdma"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "NVIDIA GPU Direct technology enabling direct memory access between GPU and network devices."
+
+  MinIO:
+    full_form: "minio object storage"
+    aliases:
+      - "minio"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "S3-compatible object storage system; used in robotics MLOps pipelines for dataset storage."
+
+  NCCL:
+    full_form: "nvidia collective communications library"
+    ambiguous: false
+    preferred_tracks: [T8, T5]
+    notes: "NVIDIA library for multi-GPU collective operations; critical for distributed training."
+
+  NVLink:
+    full_form: "nvidia link"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "NVIDIA high-speed GPU interconnect; provides higher bandwidth than PCIe for multi-GPU systems."
+
+  RDMA:
+    full_form: "remote direct memory access"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "High-performance networking technology enabling direct memory access between machines without CPU involvement."
+
+  ros2trace:
+    full_form: "ros2 trace performance analysis tool"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "Performance analysis tool for ROS2; traces executor, callback durations, and DDS traffic."
+
+  SROS2:
+    full_form: "secure ros2"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "Security framework for ROS2; provides authentication, encryption, and access control for ROS2 nodes."
+
+  SAPIEN:
+    full_form: "simulated articulated physics engine"
+    ambiguous: false
+    preferred_tracks: [T8]
+    notes: "UC Berkeley physics-based simulation platform for articulated objects and robot manipulation."
 
   JSON:
     full_form: "javascript object notation"

@@ -1,10 +1,11 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# .devin/match_policy.yaml
+# config/match_policy.yaml
+# Acronyms table → config/acronyms.yaml
 # ATS alias matching execution policy — consumed by Stage 2 (Extractor) and
 # Stage 3 (Orchestrator). Vocabulary lives in taxonomy.yaml.
 # ─────────────────────────────────────────────────────────────────────────────
-version: "1.1"
-schema_version: 2
+version: "1.2"
+schema_version: 3
 last_updated: "2026-03-25"
 
 alias_match_policy:
@@ -42,48 +43,34 @@ alias_match_policy:
     about_company:           0.1   # boilerplate; near-zero
 
   # ── Tier definitions (evaluated in order; first match per tier recorded) ──
+  # NEW: Short-circuit and LLM validation rules:
+  #   - Tier 0 (exact): conf=1.0, short-circuit, NO LLM needed
+  #   - Tier 1 (acronym): conf=0.95/0.80, LLM validation REQUIRED
+  #   - Tier 2 (lemma): conf=0.78-0.88, LLM validation REQUIRED
+  #   - Tiers 3-4 (ngram, semantic): REMOVED — replaced by LLM validation + proposal stage
   tiers:
     - mode: exact
       confidence: 1.0
+      short_circuit: true
+      llm_validation_required: false  # 100% confidence — no validation needed
 
     - mode: acronym_expansion
       direction: bidirectional
       confidence_unambiguous: 0.95
       confidence_ambiguous: 0.80
-      acronym_registry: ".devin/acronyms.yaml"
+      short_circuit: false
+      llm_validation_required: true   # Ambiguous — "ARE" could be stopword
+      acronym_registry: "config/acronyms.yaml"
 
     - mode: lemma
       confidence_formula: "0.88 - (edit_distance * 0.02)"
       confidence_range: [0.78, 0.88]
+      short_circuit: false
+      llm_validation_required: true   # Fuzzy match — needs semantic check
 
-    - mode: ngram
-      ngram_type: word
-      n: [2, 3]                    # unigrams excluded — too ambiguous for robotics
-      overlap_metric: asymmetric_jaccard   # |intersection| / |alias_tokens|
-      min_overlap: 0.70
-      confidence_range: [0.55, 0.75]
-      # Prevents decomposed single tokens from polluting ngram matching:
-      generic_exclusion_list:
-        ["control", "planning", "learning", "system", "robot",
-         "model", "estimation", "detection", "tracking", "mapping"]
-
-    - mode: semantic
-      # Upgraded from all-MiniLM-L6-v2 (22M) for better robotics-domain coverage.
-      model: "BAAI/bge-large-en-v1.5"
-      model_fallback: "all-MiniLM-L6-v2"   # low-resource / CI environments
-      threshold: 0.72
-      confidence_range: [0.72, 0.88]
-      domain_calibration:
-        # (+) = raise threshold (stricter);  (−) = lower threshold (more permissive).
-        # BUG FIX: T2/T5/T7 previously used negative values despite stated heavy overlap.
-        T1: { threshold_adjustment: +0.03 }  # precise math terms; slight raise to avoid noise
-        T2: { threshold_adjustment: +0.07 }  # control terms overlap heavily; must be strict
-        T3: { threshold_adjustment: -0.02 }  # perception terms fairly distinct; slight relax
-        T4: { threshold_adjustment: +0.02 }  # planning terms overlap heavily; strict
-        T5: { threshold_adjustment: +0.05 }  # RL/learning terms overlap widely; stricter
-        T6: { threshold_adjustment: +0.03 }  # manipulation terms overlap moderately; moderate strictness
-        T7: { threshold_adjustment: +0.04 }  # loco/nav terms bleed into general robotics
-        T8: { threshold_adjustment: +0.03 }  # precise system/infra terms; slight raise to avoid noise
+  # REMOVED tiers (no longer used in new design):
+  #   - mode: ngram        # Was Phase 3 rerank; now replaced by proposal stage
+  #   - mode: semantic      # Was Phase 2 expansion; now replaced by LLM validation
 
   # ── Rare-term / IDF boost (NEW) ──────────────────────────────────────────
   # Boosts confidence for low-frequency technical terms (e.g., "TEASER++", "GICP").
@@ -91,7 +78,7 @@ alias_match_policy:
   rarity_boost:
     enabled: true
     strategy: corpus_idf
-    background_corpus: ".devin/jd_corpus_idf.json"   # pre-computed IDF table
+    background_corpus: "config/jd_corpus_idf.json"   # pre-computed IDF table
     max_boost: 0.12
     application_point: before_tier_resolution
     fallback_boost_for_unknown_terms: 0.06            # half max if term absent from corpus
@@ -106,13 +93,55 @@ alias_match_policy:
     coverage_credit: 0.50             # half-credit for implied skills in coverage metrics
     excluded_from_bullet_generation: true
 
-  # ── Cross-tier resolution ─────────────────────────────────────────────────
+  # ── 3-Phase Cascade (REVISED) ─────────────────────────────────────────────
+  #
+  # NEW DESIGN: LLM validation after code-based matching to filter noise
+  #
+  # Phase 1: exact (short-circuit) + acronym (LLM validation)
+  #   - Tier 0 (exact): conf=1.0 → SHORT-CIRCUIT, no LLM needed
+  #   - Tier 1 (acronym): conf=0.95/0.80 → LLM validation REQUIRED
+  #
+  # Phase 2: lemma (LLM validation)
+  #   - Tier 2 (lemma): conf=0.78-0.88 → LLM validation REQUIRED
+  #
+  # Phase 3: PROPOSALS
+  #   - Keywords failing Phase 1 & Phase 2 → pending proposals for human review
+  #
+  # REMOVED: Tier 3 (ngram), Tier 4 (semantic) — replaced by LLM validation
+  #
   cross_tier_resolution:
-    strategy: highest_confidence_wins
-    tiebreaker: highest_tier_ordinal  # exact(0) > acronym(1) > lemma(2) > ngram(3) > semantic(4)
-    multi_match_policy: top_1
+    strategy: three_phase_cascade
 
-  # ── Collision (same tier, multiple skills) ───────────────────────────────
+    phase1a:
+      tier: exact
+      behavior: short_circuit     # conf=1.0, enter pool immediately
+      output: candidate_pool
+
+    phase1b_llm:
+      tier: acronym_expansion
+      behavior: llm_validation    # ALL acronym matches require LLM validation
+      output: candidate_pool      # after LLM confirms validity
+
+    phase2_llm:
+      tier: lemma
+      behavior: llm_validation    # ALL lemma matches require LLM validation
+      output: candidate_pool      # after LLM confirms validity
+
+    phase3_proposals:
+      behavior: collect_failures  # Keywords failing Phase 1 & 2 → pending/
+      output: proposals_pending
+
+    # Thresholds
+    # Confidence bands:
+    #   >= 0.80: auto-match (high confidence)
+    #   [0.60, 0.80): human review band → proposals for human confirmation
+    #   < 0.60: discard (below proposal_floor)
+    match_threshold: 0.80          # minimum confidence to auto-match
+    proposal_floor: 0.60          # below this → discard
+
+  # ── Collision (same tier, within candidate pool after Phase 3) ─────────────
+  # Applied to candidates that share the same taxonomy_ref after Phase 3 reranking.
+  # Used only when multiple source_indicators map to the same skill.
   collision_strategy: longest_then_highest
   # 1. Most tokens in alias (longest match)
   # 2. On tie: highest level (L4 > L0)
